@@ -22,13 +22,6 @@ public class InfoTopicRegister {
     public InfoTopicRegister() {
     }
 
-    public InfoTopicRegister(Boolean status, Topic topic, Teacher teacher, Group group) {
-        this.status = status;
-        this.topic = topic;
-        this.teacher = teacher;
-        this.group = group;
-    }
-
     public Integer getId() {
         return id;
     }

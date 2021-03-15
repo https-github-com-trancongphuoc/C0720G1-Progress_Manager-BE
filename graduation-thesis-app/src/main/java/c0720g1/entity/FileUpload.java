@@ -11,7 +11,7 @@ public class FileUpload {
     String url;
     @ManyToOne
     @JoinColumn(name = "process_id")
-    Process process;
+    ProcessGraduate processGraduate;
 
     public FileUpload() {
     }
@@ -32,11 +32,11 @@ public class FileUpload {
         this.url = url;
     }
 
-    public Process getProcess() {
-        return process;
+    public ProcessGraduate getProcessGraduate() {
+        return processGraduate;
     }
 
-    public void setProcess(Process process) {
-        this.process = process;
+    public void setProcessGraduate(ProcessGraduate processGraduate) {
+        this.processGraduate = processGraduate;
     }
 }

@@ -12,6 +12,10 @@ public class Student {
     String dateOfBirth;
     String address;
     String email;
+    Boolean gender;
+
+    @Column(name = "delete_flag")
+    Boolean deleteFlag;
     @Column(columnDefinition = "TEXT")
     String avatar;
     @ManyToOne
@@ -27,15 +31,12 @@ public class Student {
     public Student() {
     }
 
-    public Student(String name, String dateOfBirth, String address, String email, String avatar, Grade grade, Account account, Group group) {
-        this.name = name;
-        this.dateOfBirth = dateOfBirth;
-        this.address = address;
-        this.email = email;
-        this.avatar = avatar;
-        this.grade = grade;
-        this.account = account;
-        this.group = group;
+    public Boolean getDeleteFlag() {
+        return deleteFlag;
+    }
+
+    public void setDeleteFlag(Boolean deleteFlag) {
+        this.deleteFlag = deleteFlag;
     }
 
     public Integer getId() {
@@ -108,5 +109,13 @@ public class Student {
 
     public void setGroup(Group group) {
         this.group = group;
+    }
+
+    public Boolean getGender() {
+        return gender;
+    }
+
+    public void setGender(Boolean gender) {
+        this.gender = gender;
     }
 }

@@ -13,6 +13,9 @@ public class Teacher {
     String address;
     String phone;
     String email;
+    Boolean gender;
+    @Column(name = "delete_flag")
+    Boolean deleteFlag;
     @Column(columnDefinition = "TEXT")
     String avatar;
     @ManyToOne
@@ -25,18 +28,6 @@ public class Teacher {
     @JoinColumn(name = "account_id")
     Account account;
     public Teacher() {
-    }
-
-    public Teacher(String name, String dateOfBirth, String address, String phone, String email, String avatar, Degree degree, Faculty faculty, Account account) {
-        this.name = name;
-        this.dateOfBirth = dateOfBirth;
-        this.address = address;
-        this.phone = phone;
-        this.email = email;
-        this.avatar = avatar;
-        this.degree = degree;
-        this.faculty = faculty;
-        this.account = account;
     }
 
     public Integer getId() {
@@ -111,11 +102,27 @@ public class Teacher {
         this.faculty = faculty;
     }
 
+    public Boolean getGender() {
+        return gender;
+    }
+
+    public void setGender(Boolean gender) {
+        this.gender = gender;
+    }
+
     public Account getAccount() {
         return account;
     }
 
     public void setAccount(Account account) {
         this.account = account;
+    }
+
+    public Boolean getDeleteFlag() {
+        return deleteFlag;
+    }
+
+    public void setDeleteFlag(Boolean deleteFlag) {
+        this.deleteFlag = deleteFlag;
     }
 }
