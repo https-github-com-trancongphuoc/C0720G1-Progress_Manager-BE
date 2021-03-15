@@ -15,11 +15,6 @@ public class Grade {
     public Grade() {
     }
 
-    public Grade(String name, Faculty faculty) {
-        this.name = name;
-        this.faculty = faculty;
-    }
-
     public Integer getId() {
         return id;
     }

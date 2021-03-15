@@ -17,12 +17,6 @@ public class Notification {
     public Notification() {
     }
 
-    public Notification(String timeNotification, Account account, String content) {
-        this.timeNotification = timeNotification;
-        this.account = account;
-        this.content = content;
-    }
-
     public Integer getId() {
         return id;
     }

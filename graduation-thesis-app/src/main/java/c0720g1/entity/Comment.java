@@ -1,5 +1,7 @@
 package c0720g1.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 
 @Entity
@@ -9,27 +11,37 @@ public class Comment {
     Integer id;
     @Column(columnDefinition = "DATETIME")
     String timeComment;
-    String title;
+    @Column(name = "delete_flag")
+    Boolean deleteFlag;
     String content;
-    @OneToOne(mappedBy = "comment")
-    Comment replyComment;
+
     @ManyToOne
+    @JsonManagedReference
+    @JoinColumn (name = "comment_id")
+    Comment comment;
+    @ManyToOne
+    @JsonManagedReference
     @JoinColumn(name = "account_id")
     Account account;
     @ManyToOne
+    @JsonManagedReference
+    @JoinColumn(name = "post_report_id")
+    PostReport postReport;
+
+    @ManyToOne
+    @JsonManagedReference
     @JoinColumn(name = "process_id")
-    Process process;
+    ProcessGraduate processGraduate;
 
     public Comment() {
     }
 
-    public Comment(String timeComment, String title, String content, Comment replyComment, Account account, Process process) {
-        this.timeComment = timeComment;
-        this.title = title;
-        this.content = content;
-        this.replyComment = replyComment;
-        this.account = account;
-        this.process = process;
+    public Boolean getDeleteFlag() {
+        return deleteFlag;
+    }
+
+    public void setDeleteFlag(Boolean deleteFlag) {
+        this.deleteFlag = deleteFlag;
     }
 
     public Integer getId() {
@@ -48,14 +60,6 @@ public class Comment {
         this.timeComment = timeComment;
     }
 
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
     public String getContent() {
         return content;
     }
@@ -64,12 +68,12 @@ public class Comment {
         this.content = content;
     }
 
-    public Comment getReplyComment() {
-        return replyComment;
+    public Comment getComment() {
+        return comment;
     }
 
-    public void setReplyComment(Comment replyComment) {
-        this.replyComment = replyComment;
+    public void setComment(Comment comment) {
+        this.comment = comment;
     }
 
     public Account getAccount() {
@@ -80,11 +84,19 @@ public class Comment {
         this.account = account;
     }
 
-    public Process getProcess() {
-        return process;
+    public PostReport getPostReport() {
+        return postReport;
     }
 
-    public void setProcess(Process process) {
-        this.process = process;
+    public void setPostReport(PostReport postReport) {
+        this.postReport = postReport;
+    }
+
+    public ProcessGraduate getProcessGraduate() {
+        return processGraduate;
+    }
+
+    public void setProcessGraduate(ProcessGraduate processGraduate) {
+        this.processGraduate = processGraduate;
     }
 }

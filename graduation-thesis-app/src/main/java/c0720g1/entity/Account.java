@@ -7,20 +7,10 @@ public class Account {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Integer id;
-    String userName;
-    String passWord;
-    @OneToOne
-    @JoinColumn(name = "teacher_id")
-    Teacher teacher;
-    @OneToOne
-    @JoinColumn(name = "student_id")
-    Student student;
-    public Account() {
-    }
+    String username;
+    String password;
 
-    public Account(String userName, String passWord) {
-        this.userName = userName;
-        this.passWord = passWord;
+    public Account() {
     }
 
     public Integer getId() {
@@ -31,19 +21,19 @@ public class Account {
         this.id = id;
     }
 
-    public String getUserName() {
-        return userName;
+    public String getUsername() {
+        return username;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
-    public String getPassWord() {
-        return passWord;
+    public String getPassword() {
+        return password;
     }
 
-    public void setPassWord(String passWord) {
-        this.passWord = passWord;
+    public void setPassword(String password) {
+        this.password = password;
     }
 }
