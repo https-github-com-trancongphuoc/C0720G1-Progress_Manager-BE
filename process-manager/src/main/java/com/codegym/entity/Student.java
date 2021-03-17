@@ -17,6 +17,7 @@ public class Student {
     private String phone;
     private String email;
     private String avatar;
+    private Boolean gender;
 
     @ManyToOne
     @JoinColumn(name = "grade_id", referencedColumnName = "id")
@@ -27,7 +28,7 @@ public class Student {
     @JoinColumn(name = "group_account_id", referencedColumnName = "id")
     private GroupAccount groupAccount;
 
-    @JsonBackReference
+
     @OneToOne
     @JoinColumn(name = "account_id", referencedColumnName = "id")
     private Account account;
@@ -35,7 +36,7 @@ public class Student {
     public Student() {
     }
 
-    public Student(Integer id, String name, String dateOfBirth, String address, String phone, String email, String avatar, Grade grade, GroupAccount groupAccount, Account account) {
+    public Student(Integer id, String name, String dateOfBirth, String address, String phone, String email, String avatar, Boolean gender, Grade grade, GroupAccount groupAccount, Account account) {
         this.id = id;
         this.name = name;
         this.dateOfBirth = dateOfBirth;
@@ -43,6 +44,7 @@ public class Student {
         this.phone = phone;
         this.email = email;
         this.avatar = avatar;
+        this.gender = gender;
         this.grade = grade;
         this.groupAccount = groupAccount;
         this.account = account;
@@ -102,6 +104,14 @@ public class Student {
 
     public void setAvatar(String avatar) {
         this.avatar = avatar;
+    }
+
+    public Boolean getGender() {
+        return gender;
+    }
+
+    public void setGender(Boolean gender) {
+        this.gender = gender;
     }
 
     public Grade getGrade() {
