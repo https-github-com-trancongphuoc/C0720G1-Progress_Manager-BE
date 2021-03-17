@@ -1,8 +1,13 @@
 package com.codegym.entity;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 import javax.persistence.*;
 import java.util.List;
-
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id")
 @Entity
 @Table(name = "group_account")
 public class GroupAccount {
@@ -13,15 +18,18 @@ public class GroupAccount {
 
     private String name;
 
+    private boolean delete_flag;
+
     @OneToMany(mappedBy = "groupAccount")
     private List<Student> studentList;
 
     public GroupAccount() {
     }
 
-    public GroupAccount(Integer id, String name, List<Student> studentList) {
+    public GroupAccount(Integer id, String name, boolean delete_flag, List<Student> studentList) {
         this.id = id;
         this.name = name;
+        this.delete_flag = delete_flag;
         this.studentList = studentList;
     }
 
@@ -39,6 +47,14 @@ public class GroupAccount {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public boolean isDelete_flag() {
+        return delete_flag;
+    }
+
+    public void setDelete_flag(boolean delete_flag) {
+        this.delete_flag = delete_flag;
     }
 
     public List<Student> getStudentList() {
