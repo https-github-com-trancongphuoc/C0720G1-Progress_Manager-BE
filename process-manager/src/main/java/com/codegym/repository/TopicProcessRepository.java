@@ -6,6 +6,4 @@ import org.springframework.data.jpa.repository.Query;
 
 public interface TopicProcessRepository extends JpaRepository<TopicProcess, Integer> {
 
-    @Query(value = "select * from topic_process",nativeQuery = true)
-    TopicProcess getById(Integer id);
 }

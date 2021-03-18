@@ -6,6 +6,8 @@ import com.codegym.service.ReportService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class ReportServiceImpl implements ReportService {
     @Autowired
@@ -17,8 +19,8 @@ public class ReportServiceImpl implements ReportService {
     }
 
     @Override
-    public Report findById(Integer id) {
-        return reportRepository.getById(id);
+    public Optional<Report> findById(Integer id) {
+        return reportRepository.findById(id);
     }
 
 }
