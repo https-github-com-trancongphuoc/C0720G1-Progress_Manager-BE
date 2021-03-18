@@ -6,9 +6,9 @@ import org.springframework.data.jpa.repository.Query;
 
 public interface ReportRepository extends JpaRepository<Report, Integer> {
 
-    /** LuyenNT
-     */
-    @Query(value= "select * from report",nativeQuery= true)
-    Report getById(Integer id);
+//    /** LuyenNT
+//     */
+//    @Query(value= "select * from report where report.id = ?",nativeQuery= true)
+//    Report getById(Integer id);
 
 }
