@@ -27,7 +27,7 @@ public class Teacher {
     @JoinColumn(name = "degree_id", referencedColumnName = "id")
     private Degree degree;
 
-
+    @JsonBackReference(value = "account")
     @OneToOne
     @JoinColumn(name = "account_id", referencedColumnName = "id")
     private Account account;
