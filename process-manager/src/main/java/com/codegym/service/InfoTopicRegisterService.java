@@ -8,4 +8,6 @@ public interface InfoTopicRegisterService {
     List<InfoTopicRegister> getListProcess();
 
     InfoTopicRegister getProcessDetailById(Integer id);
+
+    InfoTopicRegister getProcessDetailByGroupId(Integer id);
 }

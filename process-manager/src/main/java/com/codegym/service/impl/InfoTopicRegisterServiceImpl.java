@@ -23,4 +23,9 @@ public class InfoTopicRegisterServiceImpl implements InfoTopicRegisterService {
     public InfoTopicRegister getProcessDetailById(Integer id) {
         return infoTopicRegisterRepository.findById(id).orElse(null);
     }
+
+    @Override
+    public InfoTopicRegister getProcessDetailByGroupId(Integer id) {
+        return infoTopicRegisterRepository.findByGroupAccount_Id(id);
+    }
 }

@@ -17,11 +17,16 @@ public class CommentServiceImpl implements CommentService {
     private CommentRepository commentRepository;
     @Override
     public Page<Comment> getListAppreciate(Integer id, Pageable pageable) {
-        return commentRepository.findAllByTopicProcess_InfoTopicRegister_IdAndReplyCommentIsNull(id, pageable);
+        return commentRepository.findAllByTopicProcess_InfoTopicRegister_IdAndReplyCommentIsNullAndStatusTrueOrderByTimeCommentDesc(id, pageable);
     }
 
     @Override
     public List<Comment> getListRepComment(Integer id) {
-        return commentRepository.findAllByReplyComment_Id(id);
+        return commentRepository.findAllByReplyComment_IdOrderByTimeCommentDesc(id);
+    }
+
+    @Override
+    public void teacherAppreciate(Comment comment) {
+        commentRepository.save(comment);
     }
 }

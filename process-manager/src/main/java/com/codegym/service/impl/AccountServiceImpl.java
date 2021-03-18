@@ -1,5 +1,6 @@
 package com.codegym.service.impl;
 
+import com.codegym.dto.StudentDTO;
 import com.codegym.entity.Account;
 import com.codegym.repository.AccountRepository;
 import com.codegym.service.AccountService;
@@ -15,5 +16,15 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public Account findByUsername(String username) {
         return accountRepository.findByUsername(username);
+    }
+
+    @Override
+    public Account getAccountById(Integer idAccount) {
+        return accountRepository.findById(idAccount).orElse(null);
+    }
+
+    @Override
+    public Account getAccountByIdStudent(Integer id) {
+        return accountRepository.findByStudent_Id(id);
     }
 }

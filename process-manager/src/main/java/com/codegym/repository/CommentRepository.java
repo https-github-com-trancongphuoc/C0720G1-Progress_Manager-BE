@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface CommentRepository extends JpaRepository<Comment, Integer> {
 
-    Page<Comment> findAllByTopicProcess_InfoTopicRegister_IdAndReplyCommentIsNull(Integer id, Pageable pageable);
+    Page<Comment> findAllByTopicProcess_InfoTopicRegister_IdAndReplyCommentIsNullAndStatusTrueOrderByTimeCommentDesc(Integer id, Pageable pageable);
 
-    List<Comment> findAllByReplyComment_Id(Integer replyComment_id);
+    List<Comment> findAllByReplyComment_IdOrderByTimeCommentDesc(Integer replyComment_id);
 }

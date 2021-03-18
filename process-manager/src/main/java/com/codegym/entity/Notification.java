@@ -10,6 +10,7 @@ public class Notification {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @Column(columnDefinition = "DATETIME")
     private String timeNotification;
     private String content;
     private String title;
@@ -20,16 +21,21 @@ public class Notification {
     @JoinColumn(name = "account_id", referencedColumnName = "id")
     private Account account;
 
+    @ManyToOne
+    @JoinColumn(name = "account_send_notification_id", referencedColumnName = "id")
+    private Account accountSendNotification;
+
     public Notification() {
     }
 
-    public Notification(Integer id, String timeNotification, String content, String title, Boolean status, Account account) {
+    public Notification(Integer id, String timeNotification, String content, String title, Boolean status, Account account, Account accountSendNotification) {
         this.id = id;
         this.timeNotification = timeNotification;
         this.content = content;
         this.title = title;
         this.status = status;
         this.account = account;
+        this.accountSendNotification = accountSendNotification;
     }
 
     public Integer getId() {
@@ -78,5 +84,13 @@ public class Notification {
 
     public void setAccount(Account account) {
         this.account = account;
+    }
+
+    public Account getAccountSendNotification() {
+        return accountSendNotification;
+    }
+
+    public void setAccountSendNotification(Account accountSendNotification) {
+        this.accountSendNotification = accountSendNotification;
     }
 }

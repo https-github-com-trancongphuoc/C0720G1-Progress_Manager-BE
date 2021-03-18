@@ -21,4 +21,14 @@ public class TopicProcessServiceImpl implements TopicProcessService {
     public TopicProcess findById(Integer id) {
         return topicProcessRepository.getById(id);
     }
+
+    @Override
+    public TopicProcess getProcessById(Integer idProcess) {
+        return topicProcessRepository.findById(idProcess).orElse(null);
+    }
+
+    @Override
+    public TopicProcess updateProcess(TopicProcess topicProcess) {
+        return topicProcessRepository.save(topicProcess);
+    }
 }
