@@ -10,4 +10,6 @@ public interface CommentService {
     Page<Comment> getListAppreciate(Integer id, Pageable pageable);
 
     List<Comment> getListRepComment(Integer id);
+
+    void teacherAppreciate(Comment comment);
 }

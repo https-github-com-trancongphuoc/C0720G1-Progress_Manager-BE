@@ -17,7 +17,9 @@ public class TopicProcess {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @Column(columnDefinition = "DATE")
     private String dateStart;
+    @Column(columnDefinition = "DATE")
     private String dateEnd;
 
     // Kiểm tra xem đã làm hoàn thành giai đoạn chưa.

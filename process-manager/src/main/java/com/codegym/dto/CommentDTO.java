@@ -12,7 +12,7 @@ public class CommentDTO extends Comment {
     }
 
     public CommentDTO(Comment comment) {
-        super(comment.getId(), comment.getTimeComment(), comment.getTitle(), comment.getContent(), comment.getStatus(), comment.getTopicProcess(), comment.getAccount(), comment.getReplyComment());
+        super(comment.getId(), comment.getTimeComment(), comment.getTitle(), comment.getContent(), comment.getStatus(),comment.getDeleteFlag(), comment.getTopicProcess(), comment.getAccount(), comment.getReplyComment());
     }
 
     public List<Comment> getReplyCommentList() {

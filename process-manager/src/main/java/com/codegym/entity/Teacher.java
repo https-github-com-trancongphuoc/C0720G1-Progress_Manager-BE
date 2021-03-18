@@ -12,6 +12,7 @@ public class Teacher {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String name;
+    @Column(columnDefinition = "DATE")
     private String dateOfBirth;
     private String address;
     private String phone;
