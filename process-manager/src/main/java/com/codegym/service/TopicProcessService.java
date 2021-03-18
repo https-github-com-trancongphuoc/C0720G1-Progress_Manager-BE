@@ -2,10 +2,13 @@ package com.codegym.service;
 
 import com.codegym.entity.TopicProcess;
 
+import java.util.Optional;
+
 
 public interface TopicProcessService {
 
     /** LuyenNT
+     * @return
      */
-    TopicProcess findById(Integer id);
+    Optional<TopicProcess> findById(Integer id);
 }

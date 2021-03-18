@@ -1,8 +1,13 @@
 package com.codegym.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import javax.persistence.*;
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id")
 
 @Entity
 @Table(name = "topic_process")
@@ -22,7 +27,7 @@ public class TopicProcess {
     // Giai đoạn hoàn thành được bao nhiêu %
     private Integer percentProcess;
 
-    @JsonBackReference
+//    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "info_topic_register", referencedColumnName = "id")
     private InfoTopicRegister infoTopicRegister;
