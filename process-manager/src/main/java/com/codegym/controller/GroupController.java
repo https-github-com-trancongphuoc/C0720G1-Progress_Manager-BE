@@ -30,13 +30,26 @@ public class GroupController {
 
     @RequestMapping(value = "list-student", method = RequestMethod.GET)
     public ResponseEntity<?> listStudent(@PageableDefault(size = 4) Pageable pageable) {
-        return new ResponseEntity<>(this.studentRepository.findAll(pageable), HttpStatus.OK);
+        return new ResponseEntity<>(this.studentRepository.findAllByGroupAccountIsNull(pageable), HttpStatus.OK);
     }
 
     @RequestMapping(value = "accept-join-group/{groupId}/{accountId}", method = RequestMethod.POST)
     public ResponseEntity<?> acceptJoinGroup(@PathVariable("groupId") Integer groupId,
                                              @PathVariable("accountId") Integer accountId) {
-        this.groupAccountService.acceptJoinGroup(groupId,accountId);
+        this.groupAccountService.acceptJoinGroup(groupId, accountId);
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "search-student/{searchName}", method = RequestMethod.GET)
+    public ResponseEntity<?> searchStudent(@PageableDefault(size = 4) Pageable pageable,
+                                           @PathVariable("searchName") String searchName) {
+        return new ResponseEntity<>(this.studentRepository.searchStudent(searchName, pageable), HttpStatus.OK);
+
+    }
+
+    @RequestMapping(value = "list-group", method = RequestMethod.GET)
+    public ResponseEntity<?> listGroup(@PageableDefault(size = 10) Pageable pageable) {
+        return new ResponseEntity<>(this.studentRepository.findAll(pageable), HttpStatus.OK);
+
     }
 }
