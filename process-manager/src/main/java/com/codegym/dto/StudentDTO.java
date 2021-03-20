@@ -1,5 +1,6 @@
 package com.codegym.dto;
 
+
 import com.codegym.entity.Account;
 import com.codegym.entity.Grade;
 import com.codegym.entity.GroupAccount;
@@ -21,7 +22,7 @@ public class StudentDTO {
 
     public StudentDTO() {
     }
-
+  
     public StudentDTO(Integer id, String name, String dateOfBirth, String address, String phone, String email, String avatar, Boolean gender, Grade grade, Account account) {
         this.id = id;
         this.name = name;
@@ -74,7 +75,7 @@ public class StudentDTO {
     public void setPhone(String phone) {
         this.phone = phone;
     }
-
+    
     public String getEmail() {
         return email;
     }
@@ -114,4 +115,5 @@ public class StudentDTO {
     public void setAccount(Account account) {
         this.account = account;
     }
+  
 }
