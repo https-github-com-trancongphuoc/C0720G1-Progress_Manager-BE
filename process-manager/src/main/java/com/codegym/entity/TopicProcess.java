@@ -1,6 +1,13 @@
 package com.codegym.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 import javax.persistence.*;
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id")
 
 @Entity
 @Table(name = "topic_process")
@@ -10,7 +17,9 @@ public class TopicProcess {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @Column(columnDefinition = "DATE")
     private String dateStart;
+    @Column(columnDefinition = "DATE")
     private String dateEnd;
 
     // Kiểm tra xem đã làm hoàn thành giai đoạn chưa.
@@ -20,16 +29,22 @@ public class TopicProcess {
     // Giai đoạn hoàn thành được bao nhiêu %
     private Integer percentProcess;
 
+//    @JsonBackReference
+    @ManyToOne
+    @JoinColumn(name = "info_topic_register", referencedColumnName = "id")
+    private InfoTopicRegister infoTopicRegister;
+
     public TopicProcess() {
     }
 
-    public TopicProcess(Integer id, String dateStart, String dateEnd, Boolean status, Integer processNumber, Integer percentProcess) {
+    public TopicProcess(Integer id, String dateStart, String dateEnd, Boolean status, Integer processNumber, Integer percentProcess, InfoTopicRegister infoTopicRegister) {
         this.id = id;
         this.dateStart = dateStart;
         this.dateEnd = dateEnd;
         this.status = status;
         this.processNumber = processNumber;
         this.percentProcess = percentProcess;
+        this.infoTopicRegister = infoTopicRegister;
     }
 
     public Integer getId() {
@@ -78,5 +93,13 @@ public class TopicProcess {
 
     public void setPercentProcess(Integer percentProcess) {
         this.percentProcess = percentProcess;
+    }
+
+    public InfoTopicRegister getInfoTopicRegister() {
+        return infoTopicRegister;
+    }
+
+    public void setInfoTopicRegister(InfoTopicRegister infoTopicRegister) {
+        this.infoTopicRegister = infoTopicRegister;
     }
 }

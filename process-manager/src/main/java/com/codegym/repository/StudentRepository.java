@@ -46,4 +46,20 @@ public interface StudentRepository extends JpaRepository<Student, Integer> {
    " student.date_of_birth, student.phone, student.grade_id)" +
    "values(?1,?2,?3,?4,?5,?6,?7) ",nativeQuery = true)
  void addNewStudent(String name, String email, String avatar, String address, String dayOfBirth,String phone, Integer grade);
+
+
+    Page<Student> findAll(Pageable pageable);
+
+    Page<Student> findAllByGroupAccountIsNull(Pageable pageable);
+
+    @Query(
+            value = "select *\n" +
+                    "from student st \n" +
+                    "where group_account_id is null\n" +
+                    "having concat(st.id,st.`name`) like %?1%",
+            nativeQuery = true)
+    Page<Student> searchStudent(String name, Pageable pageable);
+
+
+
 }

@@ -1,6 +1,7 @@
 package com.codegym.entity;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "info_topic_register")
@@ -25,15 +26,19 @@ public class InfoTopicRegister {
     @JoinColumn(name = "teacher_id", referencedColumnName = "id")
     private Teacher teacher;
 
+    @OneToMany(mappedBy = "infoTopicRegister")
+    private List<TopicProcess> processList;
+
     public InfoTopicRegister() {
     }
 
-    public InfoTopicRegister(Integer id, Boolean status, Topic topic, GroupAccount groupAccount, Teacher teacher) {
+    public InfoTopicRegister(Integer id, Boolean status, Topic topic, GroupAccount groupAccount, Teacher teacher, List<TopicProcess> processList) {
         this.id = id;
         this.status = status;
         this.topic = topic;
         this.groupAccount = groupAccount;
         this.teacher = teacher;
+        this.processList = processList;
     }
 
     public Integer getId() {
@@ -74,5 +79,13 @@ public class InfoTopicRegister {
 
     public void setTeacher(Teacher teacher) {
         this.teacher = teacher;
+    }
+
+    public List<TopicProcess> getProcessList() {
+        return processList;
+    }
+
+    public void setProcessList(List<TopicProcess> processList) {
+        this.processList = processList;
     }
 }

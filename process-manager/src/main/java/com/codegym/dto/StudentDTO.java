@@ -1,27 +1,47 @@
 package com.codegym.dto;
 
+
+import com.codegym.entity.Account;
+import com.codegym.entity.Grade;
+import com.codegym.entity.GroupAccount;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
+import javax.persistence.*;
+
 public class StudentDTO {
+    private Integer id;
     private String name;
-    private String email;
-    private String image;
-    private String address;
     private String dateOfBirth;
+    private String address;
     private String phone;
-    private Integer grade;
-    private Integer faculty;
+    private String email;
+    private String avatar;
+    private Boolean gender;
+    private Grade grade;
+    private Account account;
 
     public StudentDTO() {
     }
-
-    public StudentDTO(String name, String email, String image, String address, String dateOfBirth, String phone, Integer grade, Integer faculty) {
+  
+    public StudentDTO(Integer id, String name, String dateOfBirth, String address, String phone, String email, String avatar, Boolean gender, Grade grade, Account account) {
+        this.id = id;
         this.name = name;
-        this.email = email;
-        this.image = image;
-        this.address = address;
         this.dateOfBirth = dateOfBirth;
+        this.address = address;
         this.phone = phone;
+        this.email = email;
+        this.avatar = avatar;
+        this.gender = gender;
         this.grade = grade;
-        this.faculty = faculty;
+        this.account = account;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -32,20 +52,12 @@ public class StudentDTO {
         this.name = name;
     }
 
-    public String getEmail() {
-        return email;
+    public String getDateOfBirth() {
+        return dateOfBirth;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getImage() {
-        return image;
-    }
-
-    public void setImage(String image) {
-        this.image = image;
+    public void setDateOfBirth(String dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
     }
 
     public String getAddress() {
@@ -56,14 +68,6 @@ public class StudentDTO {
         this.address = address;
     }
 
-    public String getDateOfBirth() {
-        return dateOfBirth;
-    }
-
-    public void setDateOfBirth(String dateOfBirth) {
-        this.dateOfBirth = dateOfBirth;
-    }
-
     public String getPhone() {
         return phone;
     }
@@ -71,20 +75,45 @@ public class StudentDTO {
     public void setPhone(String phone) {
         this.phone = phone;
     }
+    
+    public String getEmail() {
+        return email;
+    }
 
-    public Integer getGrade() {
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
+
+    public Boolean getGender() {
+        return gender;
+    }
+
+    public void setGender(Boolean gender) {
+        this.gender = gender;
+    }
+
+    public Grade getGrade() {
         return grade;
     }
 
-    public void setGrade(Integer grade) {
+    public void setGrade(Grade grade) {
         this.grade = grade;
     }
 
-    public Integer getFaculty() {
-        return faculty;
+    public Account getAccount() {
+        return account;
     }
 
-    public void setFaculty(Integer faculty) {
-        this.faculty = faculty;
+    public void setAccount(Account account) {
+        this.account = account;
     }
+  
 }

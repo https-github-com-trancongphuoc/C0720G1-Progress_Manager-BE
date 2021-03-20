@@ -12,11 +12,13 @@ public class Teacher {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String name;
+    @Column(columnDefinition = "DATE")
     private String dateOfBirth;
     private String address;
     private String phone;
     private String email;
     private String avatar;
+    private Boolean gender;
 
     @ManyToOne
     @JoinColumn(name = "faculty_id", referencedColumnName = "id")
@@ -26,7 +28,7 @@ public class Teacher {
     @JoinColumn(name = "degree_id", referencedColumnName = "id")
     private Degree degree;
 
-    @JsonBackReference
+    @JsonBackReference(value = "account")
     @OneToOne
     @JoinColumn(name = "account_id", referencedColumnName = "id")
     private Account account;
@@ -34,7 +36,7 @@ public class Teacher {
     public Teacher() {
     }
 
-    public Teacher(Integer id, String name, String dateOfBirth, String address, String phone, String email, String avatar, Faculty faculty, Degree degree, Account account) {
+    public Teacher(Integer id, String name, String dateOfBirth, String address, String phone, String email, String avatar, Boolean gender, Faculty faculty, Degree degree, Account account) {
         this.id = id;
         this.name = name;
         this.dateOfBirth = dateOfBirth;
@@ -42,6 +44,7 @@ public class Teacher {
         this.phone = phone;
         this.email = email;
         this.avatar = avatar;
+        this.gender = gender;
         this.faculty = faculty;
         this.degree = degree;
         this.account = account;
@@ -101,6 +104,14 @@ public class Teacher {
 
     public void setAvatar(String avatar) {
         this.avatar = avatar;
+    }
+
+    public Boolean getGender() {
+        return gender;
+    }
+
+    public void setGender(Boolean gender) {
+        this.gender = gender;
     }
 
     public Faculty getFaculty() {
