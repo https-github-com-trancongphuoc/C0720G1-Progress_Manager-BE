@@ -52,8 +52,8 @@ public class StudentServiceImpl implements StudentService {
      */
     @Override
     public void createNewStudent(StudentDTO studentDTO) {
-        studentRepository.addNewStudent(studentDTO.getName(), studentDTO.getEmail(), studentDTO.getImage(), studentDTO.getAddress(),
-                studentDTO.getDateOfBirth(), studentDTO.getPhone(), studentDTO.getGrade());
+        studentRepository.addNewStudent(studentDTO.getName(), studentDTO.getEmail(), studentDTO.getAvatar(), studentDTO.getAddress(),
+                studentDTO.getDateOfBirth(), studentDTO.getPhone(), studentDTO.getGrade().getId());
     }
 
 }
