@@ -21,15 +21,15 @@ public class StudentController {
      * TinVT
      * Find all student
      */
-    @RequestMapping(value = "/list-student",method = RequestMethod.GET)
-    public ResponseEntity<Page<Student>> getAllStudent(@RequestParam(defaultValue = "") String find,
-                                                        @RequestParam(value = "page") Integer page){
-        Page<Student> listStudent = studentService.findAllStudent(find,PageRequest.of(page,8));
-        if (listStudent.isEmpty()){
-            return new ResponseEntity<Page<Student>>(HttpStatus.BAD_REQUEST);
-        }
-        return new ResponseEntity<Page<Student>>(listStudent, HttpStatus.OK);
-    }
+//    @RequestMapping(value = "/list-student",method = RequestMethod.GET)
+//    public ResponseEntity<Page<Student>> getAllStudent(@RequestParam(defaultValue = "") String find,
+//                                                        @RequestParam(value = "page") Integer page){
+//        Page<Student> listStudent = studentService.findAllStudent(find,PageRequest.of(page,8));
+//        if (listStudent.isEmpty()){
+//            return new ResponseEntity<Page<Student>>(HttpStatus.BAD_REQUEST);
+//        }
+//        return new ResponseEntity<Page<Student>>(listStudent, HttpStatus.OK);
+//    }
 
     /**
      * TinVT

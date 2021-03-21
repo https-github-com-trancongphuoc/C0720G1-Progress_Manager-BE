@@ -11,5 +11,9 @@ public interface CommentService {
 
     List<Comment> getListRepComment(Integer id);
 
-    void teacherAppreciate(Comment comment);
+    Comment teacherAppreciate(Comment comment);
+
+    Comment editAppreciate(Comment comment);
+
+    void deleteAppreciate(Comment comment);
 }

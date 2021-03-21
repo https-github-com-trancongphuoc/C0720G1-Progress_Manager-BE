@@ -36,6 +36,18 @@ public class StudentDTO {
         this.account = account;
     }
 
+    public StudentDTO(Integer id, String name, String dateOfBirth, String address, String phone, String email, String avatar, Boolean gender, Grade grade) {
+        this.id = id;
+        this.name = name;
+        this.dateOfBirth = dateOfBirth;
+        this.address = address;
+        this.phone = phone;
+        this.email = email;
+        this.avatar = avatar;
+        this.gender = gender;
+        this.grade = grade;
+    }
+
     public Integer getId() {
         return id;
     }

@@ -2,10 +2,7 @@ package com.codegym.controller;
 
 import com.codegym.dto.AppreciateDTO;
 import com.codegym.dto.CommentDTO;
-import com.codegym.entity.Comment;
-import com.codegym.entity.InfoTopicRegister;
-import com.codegym.entity.Notification;
-import com.codegym.entity.TopicProcess;
+import com.codegym.entity.*;
 import com.codegym.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -42,6 +39,9 @@ public class ProcessController {
 
     @Autowired
     private SendMail sendMail;
+
+    @Autowired
+    private GroupAccountService groupAccountService;
 
     @GetMapping("/process-list")
     private ResponseEntity<?> getListProcess() {
@@ -109,14 +109,14 @@ public class ProcessController {
         comment.setDeleteFlag(false);
         comment.setTopicProcess(topicProcess);
         comment.setStatus(true);
-        commentService.teacherAppreciate(comment);
+        comment = commentService.teacherAppreciate(comment);
 
 
         // Thông báo đánh giá của giáo viên đến sinh viên
         for (int i = 0; i < appreciateDTO.getStudentList().size(); i++) {
             Notification notification = new Notification();
-            notification.setTitle("Giáo viên vừa đánh giá quá trình làm đề tài của bạn");
-            notification.setContent(appreciateDTO.getContent());
+            notification.setTitle(accountService.getAccountById(appreciateDTO.getIdAccount()).getTeacher().getName() + " vừa đánh giá đề tài của bạn");
+            notification.setContent("Nội dung: " + appreciateDTO.getContent());
             notification.setTimeNotification(LocalDateTime.now().toString());
             notification.setAccount(accountService.getAccountByIdStudent(appreciateDTO.getStudentList().get(i).getId()));
             notification.setStatus(false);
@@ -126,7 +126,7 @@ public class ProcessController {
 
         sendMail.Appreciate(appreciateDTO);
 
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(comment, HttpStatus.OK);
     }
 
     @GetMapping("/process-by-group/{id}")
@@ -136,5 +136,58 @@ public class ProcessController {
         return new ResponseEntity<>(infoTopicRegister, HttpStatus.OK);
     }
 
+
+    @PostMapping("/edit-appreciate")
+    private ResponseEntity<?> editAppreciate(@RequestBody Comment comment) {
+        commentService.editAppreciate(comment);
+
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PostMapping("/delete-appreciate")
+    private ResponseEntity<?> deleteAppreciate(@RequestBody Comment comment) {
+        comment.setDeleteFlag(true);
+        commentService.deleteAppreciate(comment);
+
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+
+    @PostMapping("/reply-appreciate")
+    private ResponseEntity<?> replyAppreciate(@RequestBody Comment comment) {
+        comment.setDeleteFlag(false);
+        comment.setStatus(true);
+//        comment.setTitle();
+        comment.setTimeComment(LocalDateTime.now().toString());
+        comment = commentService.editAppreciate(comment);
+
+        if (!comment.getReplyComment().getAccount().getId().equals(comment.getAccount().getId())) {
+            Notification notification = new Notification();
+            notification.setAccount(comment.getReplyComment().getAccount());
+            notification.setAccountSendNotification(comment.getAccount());
+            notification.setStatus(false);
+            if (notification.getAccountSendNotification().getStudent() != null) {
+                notification.setTitle(notification.getAccountSendNotification().getStudent().getName() + " vừa trả lời đánh giá của bạn");
+                notification.setContent("Nội dung: " + comment.getContent());
+            } else {
+                notification.setTitle(notification.getAccountSendNotification().getTeacher().getName() + " vừa trả lời đánh giá của bạn");
+                notification.setContent("Nội dung: " + comment.getContent());
+            }
+            notification.setTimeNotification(LocalDateTime.now().toString());
+
+            notificationService.save(notification);
+        }
+
+
+
+        return new ResponseEntity<>(comment, HttpStatus.OK);
+    }
+
+    @GetMapping("/group/{id}")
+    private ResponseEntity<?> getMemberInGroup(@PathVariable Integer id) {
+        GroupAccount groupAccount = groupAccountService.getGroupById(id);
+
+        return new ResponseEntity<>(groupAccount, HttpStatus.OK);
+    }
 
 }
