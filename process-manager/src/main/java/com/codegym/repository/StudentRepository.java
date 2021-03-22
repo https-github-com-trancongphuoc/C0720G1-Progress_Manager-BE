@@ -1,5 +1,4 @@
 package com.codegym.repository;
-import com.codegym.dto.IStudentDTO;
 import com.codegym.entity.Student;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -15,9 +14,10 @@ public interface StudentRepository extends JpaRepository<Student, Integer> {
 
  /**
   * TinVT
-  * Delete Student By id
+  * Get All Student
   */
- @Query(value = "SELECT * from student join grade on student.grade_id = grade.id join faculty on grade.faculty_id = faculty.id WHERE CONCAT('MSV-',student.id,student.name,student.address, student.date_of_birth, student.email, student.phone, grade.name, faculty.name) LIKE %?1% ", nativeQuery = true)
+ @Query(value = "SELECT * from student join grade on student.grade_id = grade.id join faculty on grade.faculty_id = faculty.id " +
+         "WHERE CONCAT('MSV-',student.id,ifnull(student.name,''),ifnull(student.address,''),ifnull(student.date_of_birth,''),ifnull(student.email,''),ifnull(student.phone,''), faculty.name) LIKE %?1% ", nativeQuery = true)
  Page<Student> getAllStudent(String find, Pageable pageable);
 
  /**

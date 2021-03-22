@@ -1,7 +1,6 @@
 package com.codegym.service.impl;
 
-import com.codegym.dto.IStudentDTO;
-import com.codegym.dto.StudentDTO;
+import com.codegym.dto.CreateUpdateStudentDTO;
 import com.codegym.entity.Student;
 import com.codegym.repository.StudentRepository;
 import com.codegym.service.StudentService;
@@ -40,7 +39,7 @@ public class StudentServiceImpl implements StudentService {
      * Edit Student
      */
     @Override
-    public void editStudent(StudentDTO studentDTO) {
+    public void editStudent(CreateUpdateStudentDTO studentDTO) {
 //        studentRepository.editStudent(studentDTO.getName(), studentDTO.getEmail(), studentDTO.getAvatar(), studentDTO.getAddress(),
 //                studentDTO.getDayOfBirth(), studentDTO.getGender(), studentDTO.getId());
     }
@@ -51,9 +50,13 @@ public class StudentServiceImpl implements StudentService {
      * Create New Student
      */
     @Override
-    public void createNewStudent(StudentDTO studentDTO) {
-        studentRepository.addNewStudent(studentDTO.getName(), studentDTO.getEmail(), studentDTO.getAvatar(), studentDTO.getAddress(),
-                studentDTO.getDateOfBirth(), studentDTO.getPhone(), studentDTO.getGrade().getId());
+    public void createNewStudent(CreateUpdateStudentDTO studentDTO) {
+        studentRepository.addNewStudent(studentDTO.getName(), studentDTO.getEmail(), studentDTO.getImage(), studentDTO.getAddress(),
+                studentDTO.getDateOfBirth(), studentDTO.getPhone(), studentDTO.getGrade());
     }
 
+    @Override
+    public Student findById(Integer id) {
+        return studentRepository.findById(id).orElse(null);
+    }
 }

@@ -1,6 +1,5 @@
 package com.codegym.controller;
-import com.codegym.dto.IStudentDTO;
-import com.codegym.dto.StudentDTO;
+import com.codegym.dto.CreateUpdateStudentDTO;
 import com.codegym.entity.Student;
 import com.codegym.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,15 +20,15 @@ public class StudentController {
      * TinVT
      * Find all student
      */
-//    @RequestMapping(value = "/list-student",method = RequestMethod.GET)
-//    public ResponseEntity<Page<Student>> getAllStudent(@RequestParam(defaultValue = "") String find,
-//                                                        @RequestParam(value = "page") Integer page){
-//        Page<Student> listStudent = studentService.findAllStudent(find,PageRequest.of(page,8));
-//        if (listStudent.isEmpty()){
-//            return new ResponseEntity<Page<Student>>(HttpStatus.BAD_REQUEST);
-//        }
-//        return new ResponseEntity<Page<Student>>(listStudent, HttpStatus.OK);
-//    }
+    @RequestMapping(value = "/student-list",method = RequestMethod.GET)
+    public ResponseEntity<Page<Student>> getAllStudent(@RequestParam(defaultValue = "") String find,
+                                                        @RequestParam(value = "page") Integer page){
+        Page<Student> listStudent = studentService.findAllStudent(find,PageRequest.of(page,8));
+        if (listStudent.isEmpty()){
+            return new ResponseEntity<Page<Student>>(HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<Page<Student>>(listStudent, HttpStatus.OK);
+    }
 
     /**
      * TinVT
@@ -46,21 +45,34 @@ public class StudentController {
      * Edit Student
      */
     @RequestMapping(value = "/edit-student", method = RequestMethod.PUT)
-    public ResponseEntity<?> editStudent(@RequestBody StudentDTO studentDTO){
+    public ResponseEntity<?> editStudent(@RequestBody CreateUpdateStudentDTO studentDTO){
         studentService.editStudent(studentDTO);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     /**
      * TinVT
-     * Edit Student
+     * create Student
      */
     @RequestMapping(value = "/create-student")
-    public ResponseEntity<StudentDTO> createStudent(@RequestBody StudentDTO studentDTO){
+    public ResponseEntity<CreateUpdateStudentDTO> createStudent(@RequestBody CreateUpdateStudentDTO studentDTO){
         if(studentDTO == null){
-            return new ResponseEntity<StudentDTO>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<CreateUpdateStudentDTO>(HttpStatus.BAD_REQUEST);
         }
         studentService.createNewStudent(studentDTO);
-        return new ResponseEntity<StudentDTO>(studentDTO, HttpStatus.OK);
+        return new ResponseEntity<CreateUpdateStudentDTO>(studentDTO, HttpStatus.OK);
+    }
+
+    /**
+     * TinVT
+     * Find Student By Id
+     */
+    @RequestMapping(value = "/get-Student-by-id/{id}", method = RequestMethod.GET)
+    public ResponseEntity<Student> findStudentById(@PathVariable Integer id){
+        Student student = studentService.findById(id);
+        if (student == null){
+            return new ResponseEntity<Student>(HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<Student>(student, HttpStatus.OK);
     }
 }
