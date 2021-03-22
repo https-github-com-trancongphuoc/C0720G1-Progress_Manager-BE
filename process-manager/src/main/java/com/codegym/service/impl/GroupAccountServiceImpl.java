@@ -1,5 +1,6 @@
 package com.codegym.service.impl;
 
+import com.codegym.entity.GroupAccount;
 import com.codegym.repository.GroupAccountRepository;
 import com.codegym.repository.StudentRepository;
 import com.codegym.service.GroupAccountService;
@@ -24,5 +25,10 @@ public class GroupAccountServiceImpl implements GroupAccountService {
     @Override
     public void acceptJoinGroup(Integer groupId, Integer accountId) {
         groupAccountRepository.acceptJoinGroup(groupId,accountId);
+    }
+
+    @Override
+    public GroupAccount getGroupById(Integer id) {
+        return groupAccountRepository.findById(id).orElse(null);
     }
 }
