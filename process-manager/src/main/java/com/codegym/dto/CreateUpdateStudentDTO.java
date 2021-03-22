@@ -1,39 +1,17 @@
 package com.codegym.dto;
 
-
-import com.codegym.entity.Account;
-import com.codegym.entity.Grade;
-import com.codegym.entity.GroupAccount;
-import com.fasterxml.jackson.annotation.JsonBackReference;
-
-import javax.persistence.*;
-
-public class StudentDTO {
+public class CreateUpdateStudentDTO {
     private Integer id;
     private String name;
     private String dateOfBirth;
     private String address;
     private String phone;
     private String email;
-    private String avatar;
+    private String image;
     private Boolean gender;
-    private Grade grade;
-    private Account account;
+    private Integer grade;
 
-    public StudentDTO() {
-    }
-  
-    public StudentDTO(Integer id, String name, String dateOfBirth, String address, String phone, String email, String avatar, Boolean gender, Grade grade, Account account) {
-        this.id = id;
-        this.name = name;
-        this.dateOfBirth = dateOfBirth;
-        this.address = address;
-        this.phone = phone;
-        this.email = email;
-        this.avatar = avatar;
-        this.gender = gender;
-        this.grade = grade;
-        this.account = account;
+    public CreateUpdateStudentDTO() {
     }
 
     public Integer getId() {
@@ -75,21 +53,13 @@ public class StudentDTO {
     public void setPhone(String phone) {
         this.phone = phone;
     }
-    
+
     public String getEmail() {
         return email;
     }
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public String getAvatar() {
-        return avatar;
-    }
-
-    public void setAvatar(String avatar) {
-        this.avatar = avatar;
     }
 
     public Boolean getGender() {
@@ -100,20 +70,19 @@ public class StudentDTO {
         this.gender = gender;
     }
 
-    public Grade getGrade() {
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+    public Integer getGrade() {
         return grade;
     }
 
-    public void setGrade(Grade grade) {
+    public void setGrade(Integer grade) {
         this.grade = grade;
     }
-
-    public Account getAccount() {
-        return account;
-    }
-
-    public void setAccount(Account account) {
-        this.account = account;
-    }
-  
 }

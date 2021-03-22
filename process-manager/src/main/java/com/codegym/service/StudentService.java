@@ -1,7 +1,6 @@
 package com.codegym.service;
 
-import com.codegym.dto.IStudentDTO;
-import com.codegym.dto.StudentDTO;
+import com.codegym.dto.CreateUpdateStudentDTO;
 import com.codegym.entity.Student;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -24,11 +23,17 @@ public interface StudentService {
      * TinVT
      * Edit Student
      */
-    void editStudent(StudentDTO studentDTO);
+    void editStudent(CreateUpdateStudentDTO studentDTO);
 
     /**
      * TinVT
      * Create New Student
      */
-    void createNewStudent(StudentDTO studentDTO);
+    void createNewStudent(CreateUpdateStudentDTO studentDTO);
+
+    /**
+     * TinVT
+     * Find By Id
+     */
+    Student findById(Integer id);
 }
