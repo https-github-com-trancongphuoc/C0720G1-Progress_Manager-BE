@@ -48,8 +48,36 @@ public class GroupController {
     }
 
     @RequestMapping(value = "list-group", method = RequestMethod.GET)
-    public ResponseEntity<?> listGroup(@PageableDefault(size = 10) Pageable pageable) {
-        return new ResponseEntity<>(this.studentRepository.findAll(pageable), HttpStatus.OK);
+    public ResponseEntity<?> listGroup(@PageableDefault(size = 6) Pageable pageable) {
+        return new ResponseEntity<>(this.groupAccountService.listGroup(pageable), HttpStatus.OK);
+    }
 
+    @RequestMapping(value = "delete-group/{groupId}", method = RequestMethod.DELETE)
+    public ResponseEntity<?> deleteGroup(@PathVariable("groupId") Integer groupId) {
+        this.groupAccountService.deleteGroup(groupId);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "student-group/{groupId}", method = RequestMethod.GET)
+    public ResponseEntity<?> getStudentGroup(@PathVariable("groupId") Integer groupId) {
+        return new ResponseEntity<>(this.groupAccountService.getStudentGroup(groupId), HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "delete-student-group/{studentId}", method = RequestMethod.DELETE)
+    public ResponseEntity<?> deleteStudentGroup(@PathVariable("studentId") Integer studentId) {
+        this.groupAccountService.deleteStudentGroup(studentId);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "accept-group/{groupId}", method = RequestMethod.GET)
+    public ResponseEntity<?> acceptGroup(@PathVariable("groupId") Integer groupId) {
+        this.groupAccountService.acceptGroup(groupId);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "search-group/{searchName}", method = RequestMethod.GET)
+    public ResponseEntity<?> searchGroup(@PageableDefault(size = 6) Pageable pageable,
+                                         @PathVariable("searchName") String searchName) {
+        return new ResponseEntity<>(this.groupAccountService.searchGroup(searchName, pageable), HttpStatus.OK);
     }
 }
