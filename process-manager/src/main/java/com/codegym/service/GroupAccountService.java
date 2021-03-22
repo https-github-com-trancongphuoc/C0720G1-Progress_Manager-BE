@@ -8,6 +8,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import java.util.List;
+import com.codegym.entity.GroupAccount;
 
 public interface GroupAccountService {
     void saveGroup(String name, Integer leaderId);
@@ -26,4 +27,5 @@ public interface GroupAccountService {
 
     void acceptGroup(Integer groupId);
 
+    GroupAccount getGroupById(Integer id);
 }

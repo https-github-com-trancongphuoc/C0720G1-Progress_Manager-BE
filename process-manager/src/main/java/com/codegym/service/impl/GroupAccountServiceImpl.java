@@ -3,6 +3,7 @@ package com.codegym.service.impl;
 import com.codegym.dto.StudentInformation;
 import com.codegym.entity.GroupAccount;
 import com.codegym.entity.Student;
+import com.codegym.entity.GroupAccount;
 import com.codegym.repository.GroupAccountRepository;
 import com.codegym.repository.StudentRepository;
 import com.codegym.service.GroupAccountService;
@@ -63,5 +64,9 @@ public class GroupAccountServiceImpl implements GroupAccountService {
         groupAccountRepository.acceptGroup(groupId);
     }
 
-
+    
+    @Override
+    public GroupAccount getGroupById(Integer id) {
+        return groupAccountRepository.findById(id).orElse(null);
+    }
 }

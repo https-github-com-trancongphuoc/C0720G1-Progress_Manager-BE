@@ -1,8 +1,13 @@
 package com.codegym.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import javax.persistence.*;
+//@JsonIdentityInfo(
+//        generator = ObjectIdGenerators.PropertyGenerator.class,
+//        property = "id")
 
 @Entity
 @Table(name = "topic_process")
@@ -12,7 +17,9 @@ public class TopicProcess {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @Column(columnDefinition = "DATE")
     private String dateStart;
+    @Column(columnDefinition = "DATE")
     private String dateEnd;
 
     // Kiểm tra xem đã làm hoàn thành giai đoạn chưa.

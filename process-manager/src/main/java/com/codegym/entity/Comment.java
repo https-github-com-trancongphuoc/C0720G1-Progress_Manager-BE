@@ -11,6 +11,7 @@ public class Comment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @Column(columnDefinition = "DATETIME")
     private String timeComment;
     private String title;
     private String content;
@@ -18,6 +19,7 @@ public class Comment {
     // Đánh giá của giáo viên = true;
     // Thắc mắc của sinh viên = false;
     private Boolean status;
+    private Boolean deleteFlag;
 
     @ManyToOne
     @JoinColumn(name = "topic_process_id", referencedColumnName = "id")
@@ -34,12 +36,13 @@ public class Comment {
     public Comment() {
     }
 
-    public Comment(Integer id, String timeComment, String title, String content, Boolean status, TopicProcess topicProcess, Account account, Comment replyComment) {
+    public Comment(Integer id, String timeComment, String title, String content, Boolean status, Boolean deleteFlag, TopicProcess topicProcess, Account account, Comment replyComment) {
         this.id = id;
         this.timeComment = timeComment;
         this.title = title;
         this.content = content;
         this.status = status;
+        this.deleteFlag = deleteFlag;
         this.topicProcess = topicProcess;
         this.account = account;
         this.replyComment = replyComment;
@@ -83,6 +86,14 @@ public class Comment {
 
     public void setStatus(Boolean status) {
         this.status = status;
+    }
+
+    public Boolean getDeleteFlag() {
+        return deleteFlag;
+    }
+
+    public void setDeleteFlag(Boolean deleteFlag) {
+        this.deleteFlag = deleteFlag;
     }
 
     public TopicProcess getTopicProcess() {

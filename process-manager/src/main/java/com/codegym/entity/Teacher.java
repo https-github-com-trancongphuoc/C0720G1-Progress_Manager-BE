@@ -12,6 +12,7 @@ public class Teacher {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String name;
+    @Column(columnDefinition = "DATE")
     private String dateOfBirth;
     private String address;
     private String phone;
@@ -27,7 +28,7 @@ public class Teacher {
     @JoinColumn(name = "degree_id", referencedColumnName = "id")
     private Degree degree;
 
-
+    @JsonBackReference(value = "account")
     @OneToOne
     @JoinColumn(name = "account_id", referencedColumnName = "id")
     private Account account;
