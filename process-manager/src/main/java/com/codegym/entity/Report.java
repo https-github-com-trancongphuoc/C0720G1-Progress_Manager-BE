@@ -15,6 +15,8 @@ public class Report {
 
     private String title;
     private String content;
+    @Column(columnDefinition = "DATETIME")
+    private String date;
 
     @ManyToOne
     @JoinColumn(name = "topic_process_id", referencedColumnName = "id")
@@ -23,11 +25,12 @@ public class Report {
     public Report() {
     }
 
-    public Report(Integer id, String url, String title, String content, TopicProcess topicProcess) {
+    public Report(Integer id, String url, String title, String content, String date, TopicProcess topicProcess) {
         this.id = id;
         this.url = url;
         this.title = title;
         this.content = content;
+        this.date = date;
         this.topicProcess = topicProcess;
     }
 
@@ -69,5 +72,13 @@ public class Report {
 
     public void setTopicProcess(TopicProcess topicProcess) {
         this.topicProcess = topicProcess;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
     }
 }

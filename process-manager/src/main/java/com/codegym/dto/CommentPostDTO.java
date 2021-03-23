@@ -11,6 +11,12 @@ public class CommentPostDTO {
     Integer accountId;
     Integer topicProcessId;
     Integer replyCommentId;
+    String email;
+    Integer processDetailId;
+    Integer teacherId;
+//    private Integer percentProcess;
+//    private Integer idProcess;
+    ;
 
     public CommentPostDTO() {
     }
@@ -85,5 +91,29 @@ public class CommentPostDTO {
 
     public void setReplyCommentId(Integer replyCommentId) {
         this.replyCommentId = replyCommentId;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public Integer getProcessDetailId() {
+        return processDetailId;
+    }
+
+    public void setProcessDetailId(Integer processDetailId) {
+        this.processDetailId = processDetailId;
+    }
+
+    public Integer getTeacherId() {
+        return teacherId;
+    }
+
+    public void setTeacherId(Integer teacherId) {
+        this.teacherId = teacherId;
     }
 }

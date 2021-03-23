@@ -1,6 +1,5 @@
 package com.codegym.service;
 
-import com.codegym.dto.StudentDTO;
 import com.codegym.entity.Account;
 
 public interface AccountService {
@@ -10,4 +9,6 @@ public interface AccountService {
     Account getAccountById(Integer idAccount);
 
     Account getAccountByIdStudent(Integer id);
+
+    Account getAccountByIdTeacher(Integer id);
 }
