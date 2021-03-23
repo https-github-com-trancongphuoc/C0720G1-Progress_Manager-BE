@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.mail.MessagingException;
 import java.io.UnsupportedEncodingException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -43,9 +44,12 @@ public class ProcessController {
     @Autowired
     private GroupAccountService groupAccountService;
 
+    @Autowired
+    private TopicService topicService;
+
     @GetMapping("/process-list")
-    private ResponseEntity<?> getListProcess() {
-        List<InfoTopicRegister> processList = infoTopicRegisterService.getListProcess();
+    private ResponseEntity<?> getListProcess(@PageableDefault(size = 5) Pageable pageable) {
+        Page<InfoTopicRegister> processList = infoTopicRegisterService.getListProcess(pageable);
 
         return new ResponseEntity<>(processList, HttpStatus.OK);
     }
@@ -100,6 +104,17 @@ public class ProcessController {
         }
         topicProcess = topicProcessService.updateProcess(topicProcess);
         // ------
+
+
+        InfoTopicRegister infoTopicRegister = infoTopicRegisterService.getProcessDetailById(appreciateDTO.getIdProcessDetail());
+        if (infoTopicRegister.getProcessList().get(infoTopicRegister.getProcessList().size() - 1).getPercentProcess() == 100) {
+            infoTopicRegister.setStatusComplete(true);
+        }
+        infoTopicRegisterService.registerInfoTopic(infoTopicRegister);
+
+
+
+
 
         // Lưu đánh giá của giáo viên vào DB
         Comment comment = new Comment();
@@ -190,4 +205,45 @@ public class ProcessController {
         return new ResponseEntity<>(groupAccount, HttpStatus.OK);
     }
 
+    @PostMapping("/register-topic")
+    private ResponseEntity<?> registerTopic(@RequestBody InfoTopicRegister infoTopicRegister) {
+        if (infoTopicRegister.getTopic().getId() == null) {
+            infoTopicRegister.setTopic(topicService.registerTopic(infoTopicRegister.getTopic()));
+        }
+
+        infoTopicRegister.setStatus(false);
+        infoTopicRegister.setStatusComplete(false);
+
+        infoTopicRegisterService.registerInfoTopic(infoTopicRegister);
+
+
+        return  new ResponseEntity<>(infoTopicRegister, HttpStatus.OK);
+    }
+
+    @GetMapping("/get-topic-not-approval")
+    private ResponseEntity<?> getListTopicNotApproval(@PageableDefault(size = 5) Pageable pageable,
+                                                      @RequestParam Integer id) {
+        Page<InfoTopicRegister> infoTopicRegisterList = infoTopicRegisterService.getListTopicNotApproval(id, pageable);
+
+        return new ResponseEntity<>(infoTopicRegisterList, HttpStatus.OK);
+    }
+
+    @PostMapping("/approval")
+    private ResponseEntity<?> approvalTopic(@RequestBody InfoTopicRegister infoTopicRegister) {
+        infoTopicRegister.setStatus(true);
+        infoTopicRegisterService.registerInfoTopic(infoTopicRegister);
+
+        for (int i = 0; i < 4; i++) {
+            TopicProcess topicProcess = new TopicProcess();
+            topicProcess.setInfoTopicRegister(infoTopicRegister);
+            topicProcess.setStatus(false);
+            topicProcess.setPercentProcess(0);
+            topicProcess.setProcessNumber(i + 1);
+            topicProcess.setDateStart(LocalDate.now().plusDays(i * 7).toString());
+            topicProcess.setDateEnd(LocalDate.now().plusDays((i + 1) * 7).toString());
+            topicProcessService.updateProcess(topicProcess);
+        }
+
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }

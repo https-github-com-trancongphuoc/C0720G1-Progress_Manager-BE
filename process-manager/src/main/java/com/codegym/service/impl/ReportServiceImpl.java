@@ -18,7 +18,7 @@ public class ReportServiceImpl implements ReportService {
 
     @Override
     public void createReport(ReportDto reportDto) {
-        reportRepository.createReport(reportDto.getContent(), reportDto.getTitle(), reportDto.getUrl(), reportDto.getTopicProcessId(), LocalDateTime.now().toString());
+//        reportRepository.createReport(reportDto.getContent(), reportDto.getTitle(), reportDto.getUrl(), reportDto.getTopicProcessId(), LocalDateTime.now().toString());
     }
 
     @Override
