@@ -1,5 +1,7 @@
 package com.codegym.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 
 @Entity
@@ -12,12 +14,21 @@ public class Topic {
 
     private String name;
 
+    private String content;
+
+    @JsonBackReference
+    @ManyToOne
+    @JoinColumn(name = "faculty_id", referencedColumnName = "id")
+    private Faculty faculty;
+
     public Topic() {
     }
 
-    public Topic(Integer id, String name) {
+    public Topic(Integer id, String name, String content, Faculty faculty) {
         this.id = id;
         this.name = name;
+        this.content = content;
+        this.faculty = faculty;
     }
 
     public Integer getId() {
@@ -34,5 +45,21 @@ public class Topic {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public Faculty getFaculty() {
+        return faculty;
+    }
+
+    public void setFaculty(Faculty faculty) {
+        this.faculty = faculty;
     }
 }

@@ -14,6 +14,9 @@ public class InfoTopicRegister {
     // Kiểm tra xem đề tài đã được xét duyệt hay chưa.
     private Boolean status;
 
+    // Kiểm tra xem đã hoàn thành đề tài này hay chưa
+    private Boolean statusComplete;
+
     @ManyToOne
     @JoinColumn(name = "topic_id", referencedColumnName = "id")
     private Topic topic;
@@ -32,9 +35,10 @@ public class InfoTopicRegister {
     public InfoTopicRegister() {
     }
 
-    public InfoTopicRegister(Integer id, Boolean status, Topic topic, GroupAccount groupAccount, Teacher teacher, List<TopicProcess> processList) {
+    public InfoTopicRegister(Integer id, Boolean status, Boolean statusComplete, Topic topic, GroupAccount groupAccount, Teacher teacher, List<TopicProcess> processList) {
         this.id = id;
         this.status = status;
+        this.statusComplete = statusComplete;
         this.topic = topic;
         this.groupAccount = groupAccount;
         this.teacher = teacher;
@@ -55,6 +59,14 @@ public class InfoTopicRegister {
 
     public void setStatus(Boolean status) {
         this.status = status;
+    }
+
+    public Boolean getStatusComplete() {
+        return statusComplete;
+    }
+
+    public void setStatusComplete(Boolean statusComplete) {
+        this.statusComplete = statusComplete;
     }
 
     public Topic getTopic() {
