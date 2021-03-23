@@ -15,6 +15,7 @@ public interface TopicProcessService {
 
     TopicProcess updateProcess(TopicProcess topicProcess);
 
-    Optional<TopicProcess> findById(Integer id);
+    TopicProcess findById(Integer id);
+    Optional<TopicProcess> findById1(Integer id);
 
 }
