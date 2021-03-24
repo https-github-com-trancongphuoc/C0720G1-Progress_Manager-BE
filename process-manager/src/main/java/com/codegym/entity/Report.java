@@ -14,7 +14,9 @@ public class Report {
     private String url;
 
     private String title;
+    
     private String content;
+    
     @Column(columnDefinition = "DATETIME")
     private String date;
 
@@ -31,7 +33,6 @@ public class Report {
         this.date = date;
         this.title = title;
         this.content = content;
-        this.date = date;
         this.topicProcess = topicProcess;
     }
 
