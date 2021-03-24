@@ -16,4 +16,6 @@ public interface CommentService {
     Comment editAppreciate(Comment comment);
 
     void deleteAppreciate(Comment comment);
+
+    Comment getCommentById(Integer id);
 }
