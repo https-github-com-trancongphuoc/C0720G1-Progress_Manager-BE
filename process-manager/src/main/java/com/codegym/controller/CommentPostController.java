@@ -1,9 +1,11 @@
 package com.codegym.controller;
 
 import com.codegym.dto.CommentPostDTO;
+import com.codegym.dto.NotificationDTO;
 import com.codegym.entity.Comment;
 import com.codegym.entity.Notification;
 import com.codegym.entity.Report;
+import com.codegym.repository.NotificationManagerRepository;
 import com.codegym.service.AccountService;
 import com.codegym.service.CommentPostService;
 import com.codegym.service.NotificationService;
@@ -83,6 +85,16 @@ public class CommentPostController {
     @RequestMapping(value = "/create-reply", method = RequestMethod.POST)
     public ResponseEntity<Void> createReplyComment(@Valid @RequestBody CommentPostDTO commentPostDTO, UriComponentsBuilder ucBuilder) {
         commentPostService.createReplyComment(commentPostDTO);
+        String content = "Nội dung: ";
+        String title = "Đã có người trả lời bài đăng hoặc bình luận của bạn.";
+
+        NotificationDTO notificationDTO = new NotificationDTO();
+        notificationDTO.setAccountId(commentPostDTO.getAccountSendId());
+        notificationDTO.setAccountSendNotificationId(commentPostDTO.getAccountId());
+        notificationDTO.setTitle(title);
+        notificationDTO.setContent(content + commentPostDTO.getContent());
+        commentPostService.createNotification(notificationDTO);
+
         HttpHeaders headers = new HttpHeaders();
         headers.setLocation(ucBuilder.path("/findById/{id}").buildAndExpand(commentPostDTO.getId()).toUri());
         return new ResponseEntity<Void>(headers, HttpStatus.CREATED);

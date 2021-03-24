@@ -20,7 +20,7 @@ public class Topic {
     @Column(columnDefinition = "TEXT")
     private String content;
 
-    @JsonBackReference
+
     @ManyToOne
     @JoinColumn(name = "faculty_id", referencedColumnName = "id")
     private Faculty faculty;
