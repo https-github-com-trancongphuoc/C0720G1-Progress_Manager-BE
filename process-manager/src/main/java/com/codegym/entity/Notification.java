@@ -16,6 +16,7 @@ public class Notification {
     private String title;
     // Kiểm tra xem người dùng đã xem thông báo hay chưa.
     private Boolean status;
+    private String url;
 
     @ManyToOne
     @JoinColumn(name = "account_id", referencedColumnName = "id")
@@ -28,12 +29,13 @@ public class Notification {
     public Notification() {
     }
 
-    public Notification(Integer id, String timeNotification, String content, String title, Boolean status, Account account, Account accountSendNotification) {
+    public Notification(Integer id, String timeNotification, String content, String title, Boolean status, String url, Account account, Account accountSendNotification) {
         this.id = id;
         this.timeNotification = timeNotification;
         this.content = content;
         this.title = title;
         this.status = status;
+        this.url = url;
         this.account = account;
         this.accountSendNotification = accountSendNotification;
     }
@@ -76,6 +78,14 @@ public class Notification {
 
     public void setStatus(Boolean status) {
         this.status = status;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
     }
 
     public Account getAccount() {

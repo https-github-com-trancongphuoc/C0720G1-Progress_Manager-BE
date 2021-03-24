@@ -81,10 +81,10 @@ public class ProcessController {
     /**
      * PhuocTC: Hiển thị đánh giá của giáo viên
      * */
-    @GetMapping("/appreciate-list/{id}")
-    private ResponseEntity<?> getListAppreciate(@PathVariable Integer id,
+    @GetMapping("/appreciate-list")
+    private ResponseEntity<?> getListAppreciate(@RequestParam Integer idProcessDetail,
                                                 @PageableDefault(size = 3) Pageable pageable) {
-        Page<Comment> commentList = commentService.getListAppreciate(id, pageable);
+        Page<Comment> commentList = commentService.getListAppreciate(idProcessDetail, pageable);
 
         if (commentList.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -142,9 +142,6 @@ public class ProcessController {
         infoTopicRegisterService.registerInfoTopic(infoTopicRegister);
 
 
-
-
-
         // Lưu đánh giá của giáo viên vào DB
         Comment comment = new Comment();
         comment.setTimeComment(LocalDateTime.now().toString());
@@ -163,6 +160,7 @@ public class ProcessController {
             notification.setContent("Nội dung: " + appreciateDTO.getContent());
             notification.setTimeNotification(LocalDateTime.now().toString());
             notification.setAccount(accountService.getAccountByIdStudent(appreciateDTO.getStudentList().get(i).getId()));
+            notification.setUrl("/process-detail/" + appreciateDTO.getIdProcessDetail());
             notification.setStatus(false);
             notification.setAccountSendNotification(accountService.getAccountById(appreciateDTO.getIdAccount()));
             notificationService.save(notification);
@@ -197,22 +195,36 @@ public class ProcessController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+//    /**
+//     * PhuocTC: Xóa đánh giá
+//     * */
+//    @PostMapping("/delete-appreciate")
+//    private ResponseEntity<?> deleteAppreciate(@RequestBody Comment comment) {
+//        comment.setDeleteFlag(true);
+//        commentService.deleteAppreciate(comment);
+//
+//        return new ResponseEntity<>(HttpStatus.OK);
+//    }
+
     /**
      * PhuocTC: Xóa đánh giá
      * */
-    @PostMapping("/delete-appreciate")
-    private ResponseEntity<?> deleteAppreciate(@RequestBody Comment comment) {
+    @GetMapping("/delete-appreciate/{id}")
+    private ResponseEntity<?> deleteAppreciate(@PathVariable Integer id) {
+        Comment comment = commentService.getCommentById(id);
         comment.setDeleteFlag(true);
         commentService.deleteAppreciate(comment);
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+
     /**
      * PhuocTC: Phản hồi đánh giá
      * */
-    @PostMapping("/reply-appreciate")
-    private ResponseEntity<?> replyAppreciate(@RequestBody Comment comment) {
+    @PostMapping("/reply-appreciate/{id}")
+    private ResponseEntity<?> replyAppreciate(@RequestBody Comment comment,
+                                              @PathVariable Integer id) {
         comment.setDeleteFlag(false);
         comment.setStatus(true);
 //        comment.setTitle();
@@ -224,6 +236,7 @@ public class ProcessController {
             notification.setAccount(comment.getReplyComment().getAccount());
             notification.setAccountSendNotification(comment.getAccount());
             notification.setStatus(false);
+            notification.setUrl("/process-detail/" + id);
             if (notification.getAccountSendNotification().getStudent() != null) {
                 notification.setTitle(notification.getAccountSendNotification().getStudent().getName() + " vừa trả lời đánh giá của bạn");
                 notification.setContent("Nội dung: " + comment.getContent());
