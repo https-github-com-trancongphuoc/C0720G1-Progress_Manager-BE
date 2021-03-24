@@ -47,34 +47,54 @@ public class ProcessController {
     @Autowired
     private TopicService topicService;
 
+
+    /**
+     * PhuocTC: Hiển thị danh sách các đề tài học viên đang làm
+     * */
     @GetMapping("/process-list")
     private ResponseEntity<?> getListProcess(@PageableDefault(size = 5) Pageable pageable) {
         Page<InfoTopicRegister> processList = infoTopicRegisterService.getListProcess(pageable);
+
+        if (processList.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
 
         return new ResponseEntity<>(processList, HttpStatus.OK);
     }
 
 
+    /**
+     * PhuocTC: Xem chi tiết một đề tài đang làm của học viên
+     * */
     @GetMapping("/process-detail/{id}")
     private ResponseEntity<?> getProcessDetail(@PathVariable Integer id) {
         InfoTopicRegister processDetail = infoTopicRegisterService.getProcessDetailById(id);
+
+        if (processDetail == null) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
 
         return new ResponseEntity<>(processDetail, HttpStatus.OK);
     }
 
 
+    /**
+     * PhuocTC: Hiển thị đánh giá của giáo viên
+     * */
     @GetMapping("/appreciate-list/{id}")
     private ResponseEntity<?> getListAppreciate(@PathVariable Integer id,
                                                 @PageableDefault(size = 3) Pageable pageable) {
         Page<Comment> commentList = commentService.getListAppreciate(id, pageable);
 
+        if (commentList.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
         List<CommentDTO> commentDTOList = new ArrayList<>();
 
         for (Comment comment : commentList) {
             CommentDTO commentDTO = new CommentDTO(comment);
-
             commentDTO.setReplyCommentList(commentService.getListRepComment(comment.getId()));
-
             commentDTOList.add(commentDTO);
         }
 
@@ -82,15 +102,24 @@ public class ProcessController {
     }
 
 
+    /**
+     * PhuocTC: Lấy danh sách phản hồi đánh giá
+     * */
     @GetMapping("/rep-comment-list/{id}")
     private ResponseEntity<?> getRepCommentList(@PathVariable Integer id) {
         List<Comment> commentList = commentService.getListRepComment(id);
+
+        if (commentList.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
 
         return new ResponseEntity<>(commentList, HttpStatus.OK);
     }
 
 
-
+    /**
+     * PhuocTC: Giáo viên đánh giá tiến độ làm đề tài của học viên
+     * */
     @PostMapping("/appreciate")
     private ResponseEntity<?> teacherAppreciate(@RequestBody AppreciateDTO appreciateDTO) throws UnsupportedEncodingException, MessagingException {
 
@@ -144,14 +173,23 @@ public class ProcessController {
         return new ResponseEntity<>(comment, HttpStatus.OK);
     }
 
+    /**
+     * PhuocTC: Lấy thông tin chi tiết đăng ký tiến độ theo nhóm
+     * */
     @GetMapping("/process-by-group/{id}")
     private ResponseEntity<?> getProcessDetailByGroupId(@PathVariable Integer id) {
         InfoTopicRegister infoTopicRegister = infoTopicRegisterService.getProcessDetailByGroupId(id);
 
+        if (infoTopicRegister == null) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
         return new ResponseEntity<>(infoTopicRegister, HttpStatus.OK);
     }
 
-
+    /**
+     * PhuocTC: Chỉnh sửa đánh giá
+     * */
     @PostMapping("/edit-appreciate")
     private ResponseEntity<?> editAppreciate(@RequestBody Comment comment) {
         commentService.editAppreciate(comment);
@@ -159,6 +197,9 @@ public class ProcessController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    /**
+     * PhuocTC: Xóa đánh giá
+     * */
     @PostMapping("/delete-appreciate")
     private ResponseEntity<?> deleteAppreciate(@RequestBody Comment comment) {
         comment.setDeleteFlag(true);
@@ -167,7 +208,9 @@ public class ProcessController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-
+    /**
+     * PhuocTC: Phản hồi đánh giá
+     * */
     @PostMapping("/reply-appreciate")
     private ResponseEntity<?> replyAppreciate(@RequestBody Comment comment) {
         comment.setDeleteFlag(false);
@@ -198,13 +241,24 @@ public class ProcessController {
         return new ResponseEntity<>(comment, HttpStatus.OK);
     }
 
+
+    /**
+     * PhuocTC: Tìm kiếm group theo id
+     * */
     @GetMapping("/group/{id}")
     private ResponseEntity<?> getMemberInGroup(@PathVariable Integer id) {
         GroupAccount groupAccount = groupAccountService.getGroupById(id);
 
+        if (groupAccount == null) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
         return new ResponseEntity<>(groupAccount, HttpStatus.OK);
     }
 
+    /**
+     * PhuocTC: Đăng ký 1 đề tài
+     * */
     @PostMapping("/register-topic")
     private ResponseEntity<?> registerTopic(@RequestBody InfoTopicRegister infoTopicRegister) {
         if (infoTopicRegister.getTopic().getId() == null) {
@@ -216,18 +270,27 @@ public class ProcessController {
 
         infoTopicRegisterService.registerInfoTopic(infoTopicRegister);
 
-
         return  new ResponseEntity<>(infoTopicRegister, HttpStatus.OK);
     }
 
+    /**
+     * PhuocTC: Lấy danh sách đăng ký đề tài chưa được phê duyệt
+     * */
     @GetMapping("/get-topic-not-approval")
     private ResponseEntity<?> getListTopicNotApproval(@PageableDefault(size = 5) Pageable pageable,
                                                       @RequestParam Integer id) {
         Page<InfoTopicRegister> infoTopicRegisterList = infoTopicRegisterService.getListTopicNotApproval(id, pageable);
 
+        if (infoTopicRegisterList.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
         return new ResponseEntity<>(infoTopicRegisterList, HttpStatus.OK);
     }
 
+    /**
+     * PhuocTC: Phê duyệt đề tài
+     * */
     @PostMapping("/approval")
     private ResponseEntity<?> approvalTopic(@RequestBody InfoTopicRegister infoTopicRegister) {
         infoTopicRegister.setStatus(true);
@@ -245,5 +308,19 @@ public class ProcessController {
         }
 
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    /**
+     * PhuocTC: Lấy danh sách đề tài theo khoa
+     * */
+    @GetMapping("/get-topic-list/{id}")
+    private ResponseEntity<?> getListTopicByFacultyId(@PathVariable Integer id) {
+        List<Topic> topicList = topicService.getListTopicByFacultyId(id);
+
+        if (topicList.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        return new ResponseEntity<>(topicList, HttpStatus.OK);
     }
 }
