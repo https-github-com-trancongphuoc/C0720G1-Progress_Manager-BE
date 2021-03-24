@@ -2,7 +2,6 @@ package com.codegym.repository;
 
 import com.codegym.dto.StudentInformation;
 import com.codegym.entity.GroupAccount;
-import com.codegym.entity.Student;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -17,15 +16,17 @@ import java.util.List;
 public interface GroupAccountRepository extends JpaRepository<GroupAccount, Integer> {
     @Modifying
     @Query(
-            value = "insert into group_account(`name`,delete_flag) value (?1,false)",
+            value = "insert into group_account(`name`,delete_flag,status) value (?1,false,false)",
             nativeQuery = true)
     void saveGroup(String name);
 
     @Modifying
     @Query(
-            value = "insert into account_role(account_id,role_id) value (?1,3)",
+            value = "update account_role \n" +
+                    "set account_role.role_id = 3\n" +
+                    "where account_role.account_id = ?1",
             nativeQuery = true)
-    void saveGroup(Integer leader_id);
+    void setLeaderGroup(Integer leader_id);
 
     @Modifying
     @Query(
@@ -84,5 +85,6 @@ public interface GroupAccountRepository extends JpaRepository<GroupAccount, Inte
     void acceptGroup(Integer groupId);
 
 
+    GroupAccount findByName(String nameGroup);
 }
 

@@ -70,5 +70,20 @@ public interface StudentRepository extends JpaRepository<Student, Integer> {
     Page<Student> searchStudent(String name, Pageable pageable);
 
 
+    @Modifying
+    @Query(
+            value = "update student\n" +
+                    "set student.status_join = false,\n" +
+                    " student.group_account_id = ?2\n" +
+                    "where student.id = ?1",
+            nativeQuery = true)
+    void joinGroup(Integer id, Integer groupId);
 
+    @Modifying
+    @Query(
+            value = "update student \n" +
+                    "set student.group_account_id = null\n" +
+                    "where student.id = ?1",
+            nativeQuery = true)
+    void deleteGroupOfStudentById(Integer id);
 }
