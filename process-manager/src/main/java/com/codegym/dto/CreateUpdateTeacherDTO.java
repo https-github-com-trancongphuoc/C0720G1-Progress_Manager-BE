@@ -1,6 +1,7 @@
 package com.codegym.dto;
 
 public class CreateUpdateTeacherDTO {
+    private Integer id;
     private String name;
     private String dateOfBirth;
     private String address;
@@ -14,7 +15,8 @@ public class CreateUpdateTeacherDTO {
     public CreateUpdateTeacherDTO() {
     }
 
-    public CreateUpdateTeacherDTO(String name, String dateOfBirth, String address, String phone, String email, Integer faculty, Integer degree, String avatar, Boolean gender) {
+    public CreateUpdateTeacherDTO(Integer id, String name, String dateOfBirth, String address, String phone, String email, Integer faculty, Integer degree, String avatar, Boolean gender) {
+        this.id = id;
         this.name = name;
         this.dateOfBirth = dateOfBirth;
         this.address = address;
@@ -24,6 +26,14 @@ public class CreateUpdateTeacherDTO {
         this.degree = degree;
         this.avatar = avatar;
         this.gender = gender;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getAvatar() {

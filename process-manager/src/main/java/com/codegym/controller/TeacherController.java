@@ -1,5 +1,6 @@
 package com.codegym.controller;
 import com.codegym.dto.CreateUpdateTeacherDTO;
+import com.codegym.dto.ITeacherEditDTO;
 import com.codegym.entity.Teacher;
 import com.codegym.service.TeacherService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,6 +42,21 @@ public class TeacherController {
     @RequestMapping(value = "/delete-teacher/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<?> deleteStudent(@PathVariable Integer id){
         teacherService.deleteTeacherById(id);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/get-teacher-by-id/{id}", method = RequestMethod.GET)
+    public ResponseEntity<ITeacherEditDTO> findStudentById(@PathVariable Integer id){
+        ITeacherEditDTO teacher = teacherService.findTeacherById(id);
+        if (teacher == null){
+            return new ResponseEntity<ITeacherEditDTO>(HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<ITeacherEditDTO>(teacher, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/update-teacher", method = RequestMethod.PUT)
+    public ResponseEntity<?> editStudent(@RequestBody CreateUpdateTeacherDTO teacherDTO){
+        teacherService.editTeacher(teacherDTO);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }

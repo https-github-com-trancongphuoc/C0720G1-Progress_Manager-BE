@@ -1,6 +1,7 @@
 package com.codegym.service.impl;
 
 import com.codegym.dto.CreateUpdateTeacherDTO;
+import com.codegym.dto.ITeacherEditDTO;
 import com.codegym.entity.Teacher;
 import com.codegym.repository.TeacherRepository;
 import com.codegym.service.TeacherService;
@@ -24,11 +25,22 @@ public class  TeacherServiceImpl implements TeacherService {
     @Override
     public void createTeacher(CreateUpdateTeacherDTO createUpdateTeacherDTO) {
         teacherRepository.createTeacher(createUpdateTeacherDTO.getAddress(), createUpdateTeacherDTO.getAvatar(), createUpdateTeacherDTO.getDateOfBirth(), createUpdateTeacherDTO.getEmail(),
-                createUpdateTeacherDTO.getName(), createUpdateTeacherDTO.getPhone(), createUpdateTeacherDTO.getDegree(), createUpdateTeacherDTO.getFaculty());
+                createUpdateTeacherDTO.getName(), createUpdateTeacherDTO.getPhone(), createUpdateTeacherDTO.getDegree(), createUpdateTeacherDTO.getFaculty(), createUpdateTeacherDTO.getGender());
     }
 
     @Override
     public void deleteTeacherById(Integer id) {
         teacherRepository.deleteStudent(id);
+    }
+
+    @Override
+    public ITeacherEditDTO findTeacherById(Integer id) {
+        return teacherRepository.getTeacherById(id);
+    }
+
+    @Override
+    public void editTeacher(CreateUpdateTeacherDTO createUpdateTeacherDTO) {
+        teacherRepository.editTeacher(createUpdateTeacherDTO.getAddress(), createUpdateTeacherDTO.getAvatar(),createUpdateTeacherDTO.getDateOfBirth(),createUpdateTeacherDTO.getEmail(),
+                createUpdateTeacherDTO.getName(), createUpdateTeacherDTO.getPhone(), createUpdateTeacherDTO.getDegree(), createUpdateTeacherDTO.getFaculty(), createUpdateTeacherDTO.getGender(), createUpdateTeacherDTO.getId());
     }
 }

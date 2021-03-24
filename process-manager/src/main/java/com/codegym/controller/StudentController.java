@@ -1,5 +1,6 @@
 package com.codegym.controller;
 import com.codegym.dto.CreateUpdateStudentDTO;
+import com.codegym.dto.IStudentEditDTO;
 import com.codegym.entity.Student;
 import com.codegym.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +23,7 @@ public class StudentController {
      */
     @RequestMapping(value = "/student-list",method = RequestMethod.GET)
     public ResponseEntity<Page<Student>> getAllStudent(@RequestParam(defaultValue = "") String find,
-                                                        @RequestParam(value = "page") Integer page){
+                                                       @RequestParam(value = "page") Integer page){
         Page<Student> listStudent = studentService.findAllStudent(find,PageRequest.of(page,8));
         if (listStudent.isEmpty()){
             return new ResponseEntity<Page<Student>>(HttpStatus.BAD_REQUEST);
@@ -67,12 +68,12 @@ public class StudentController {
      * TinVT
      * Find Student By Id
      */
-    @RequestMapping(value = "/get-Student-by-id/{id}", method = RequestMethod.GET)
-    public ResponseEntity<Student> findStudentById(@PathVariable Integer id){
-        Student student = studentService.findById(id);
+    @RequestMapping(value = "/get-student-by-id/{id}", method = RequestMethod.GET)
+    public ResponseEntity<IStudentEditDTO> findStudentById(@PathVariable Integer id){
+        IStudentEditDTO student = studentService.findStudentById(id);
         if (student == null){
-            return new ResponseEntity<Student>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<IStudentEditDTO>(HttpStatus.BAD_REQUEST);
         }
-        return new ResponseEntity<Student>(student, HttpStatus.OK);
+        return new ResponseEntity<IStudentEditDTO>(student, HttpStatus.OK);
     }
 }
