@@ -2,7 +2,11 @@ package com.codegym.controller;
 
 import com.codegym.dto.CommentPostDTO;
 import com.codegym.entity.Comment;
+import com.codegym.entity.Notification;
+import com.codegym.entity.Report;
+import com.codegym.service.AccountService;
 import com.codegym.service.CommentPostService;
+import com.codegym.service.NotificationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -14,7 +18,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import javax.mail.MessagingException;
 import javax.validation.Valid;
+import java.io.UnsupportedEncodingException;
+import java.time.LocalDateTime;
 
 @RestController
 @RequestMapping("/api/public/process-post")
@@ -24,16 +31,49 @@ public class CommentPostController {
     @Autowired
     CommentPostService commentPostService;
 
+    @Autowired
+    AccountService accountService;
+
+    @Autowired
+    NotificationService notificationService;
+
+
     /**
-     * Trung TQ: Thêm mới comment
+     * Trung TQ: Thêm mới comment, gửi mail và thông báo
      */
 
     @RequestMapping(value = "/create-comment", method = RequestMethod.POST)
-    public ResponseEntity<Void> createCommentPost(@Valid @RequestBody CommentPostDTO commentPostDTO, UriComponentsBuilder ucBuilder) {
+    public ResponseEntity<Void> createCommentPost(@Valid @RequestBody CommentPostDTO commentPostDTO, UriComponentsBuilder ucBuilder) throws UnsupportedEncodingException, MessagingException {
         commentPostService.createCommentPost(commentPostDTO);
+        /**
+        * Trung TQ: gửi mail và thông báo
+        */
+        commentPostService.questionStudent(commentPostDTO);
+
+        Notification notification = new Notification();
+        notification.setTitle(accountService.getAccountById(commentPostDTO.getAccountId()).getStudent().getName() + " vừa đăng bình câu hỏi về đề tài đang làm");
+        notification.setTimeNotification(LocalDateTime.now().toString());
+        notification.setAccount(accountService.getAccountByIdTeacher(commentPostDTO.getTeacherId()));
+        notification.setStatus(false);
+        notification.setAccountSendNotification(accountService.getAccountById(commentPostDTO.getAccountId()));
+        notificationService.save(notification);
+
         HttpHeaders headers = new HttpHeaders();
         headers.setLocation(ucBuilder.path("/findById/{id}").buildAndExpand(commentPostDTO.getId()).toUri());
         return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
+    }
+
+    /**
+     * Trung TQ: Cập nhập comment
+     */
+    @RequestMapping(value = "/update-post/{id}", method = RequestMethod.PUT)
+    public ResponseEntity<Comment> updateCommentPost(@PathVariable("id") Integer id, @RequestBody CommentPostDTO commentPostDTO) {
+        Comment currentComment = commentPostService.findByIdComment(id);
+        if (currentComment == null) {
+            return new ResponseEntity<Comment>(HttpStatus.NOT_FOUND);
+        }
+        commentPostService.updateCommentPost(commentPostDTO);
+        return new ResponseEntity<Comment>(currentComment, HttpStatus.OK);
     }
 
     /**
@@ -64,14 +104,6 @@ public class CommentPostController {
     /**
      * Trung TQ: Danh sách comment
      */
-    @RequestMapping(value = "findById/{id}/page-comment", method = RequestMethod.GET)
-    public ResponseEntity<Page<Comment>> listPostIdComment(@PathVariable("id") Integer id, @PageableDefault(size = 5) Pageable pageable) {
-        Page<Comment> comments = commentPostService.findAllByComment(id, pageable);
-        if (comments.isEmpty()) {
-            return new ResponseEntity<Page<Comment>>(HttpStatus.NO_CONTENT);
-        }
-        return new ResponseEntity<Page<Comment>>(comments, HttpStatus.OK);
-    }
 
     @RequestMapping(value = "findById/{id}/comment", method = RequestMethod.GET, params = {"page", "size"})
     public ResponseEntity<Page<Comment>> pageProcessIdComment(@RequestParam("page") int page,
@@ -86,7 +118,7 @@ public class CommentPostController {
 
     /**
      * Trung TQ: Danh sách reply
-     * */
+     */
     @RequestMapping(value = "findById/{id}/page-reply", method = RequestMethod.GET)
     public ResponseEntity<Page<Comment>> listCommentIdReply(@PathVariable("id") Integer id, @PageableDefault(size = 20) Pageable pageable) {
         Page<Comment> comments = commentPostService.findAllByCommentReply(id, pageable);
@@ -98,7 +130,7 @@ public class CommentPostController {
 
     /**
      * Trung TQ: Danh sách reply - dùng để ẩn hiện
-     * */
+     */
     @RequestMapping(value = "findById/{id}/reply", method = RequestMethod.GET, params = {"page", "size"})
     public ResponseEntity<Page<Comment>> pageCommentIdReply(@RequestParam("page") int page,
                                                             @RequestParam("size") int size,
@@ -109,9 +141,10 @@ public class CommentPostController {
         }
         return new ResponseEntity<Page<Comment>>(comments, HttpStatus.OK);
     }
+
     /**
      * Trung TQ: Xóa một comment
-     * */
+     */
     @RequestMapping(value = "/delete/{id}/{accountId}", method = RequestMethod.PATCH)
     public ResponseEntity<Comment> deleteVaccination(@PathVariable("id") Integer id, @PathVariable("accountId") Integer accountId) {
         Comment comment = commentPostService.findByIdComment(id);
@@ -124,7 +157,7 @@ public class CommentPostController {
 
     /**
      * Trung TQ: Xóa một comment
-     * */
+     */
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.PATCH)
     public ResponseEntity<Comment> deleteVaccination(@PathVariable("id") Integer id) {
         Comment comment = commentPostService.findByIdComment(id);
@@ -133,5 +166,20 @@ public class CommentPostController {
         }
         commentPostService.deleteComment(id);
         return new ResponseEntity<Comment>(HttpStatus.OK);
+    }
+
+    /**
+     * Trung TQ: Danh sách báo cáo theo từng giai đoạn
+     */
+
+    @RequestMapping(value = "findById/{id}/report", method = RequestMethod.GET, params = {"page", "size"})
+    public ResponseEntity<Page<Report>> pageProcessIdReport(@RequestParam("page") int page,
+                                                            @RequestParam("size") int size,
+                                                            @PathVariable("id") Integer id) {
+        Page<Report> reports = commentPostService.findAllByReport(id, PageRequest.of(page, size));
+        if (reports.isEmpty()) {
+            return new ResponseEntity<Page<Report>>(HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<Page<Report>>(reports, HttpStatus.OK);
     }
 }
