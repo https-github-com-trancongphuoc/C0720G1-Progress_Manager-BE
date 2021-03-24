@@ -9,7 +9,9 @@ import javax.transaction.Transactional;
 @Transactional
 public interface TopicProcessRepository extends JpaRepository<TopicProcess, Integer> {
 
-
+    /** LuyenNT
+     * @return
+     */
     @Query(value = "SELECT * FROM topic_process where id = ?",nativeQuery = true)
     TopicProcess getByIdTopicProcess(Integer id);
 }
