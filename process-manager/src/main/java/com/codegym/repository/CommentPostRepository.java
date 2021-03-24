@@ -40,8 +40,12 @@ public interface CommentPostRepository extends JpaRepository<Comment, Integer> {
     void createCommentPost(String content, String dateComment, Integer accountId, Boolean status, Boolean deleteFlag, String title, Integer topicProcessId);
 
     @Modifying
-    @Query(value = "UPDATE `comment` SET `content` = ?1 WHERE `id` = ?2 and account_id = ?3", nativeQuery = true)
-    void updateComment(String content, Integer id, Integer accountId);
+    @Query(value = "UPDATE `comment` SET `title` = ?1 , `content` = ?2 WHERE `id` = ?3", nativeQuery = true)
+    void updateCommentPost(String title, String content, Integer id);
+
+    @Modifying
+    @Query(value = "UPDATE `comment` SET `content` = ?1 WHERE `id` = ?2 ", nativeQuery = true)
+    void updateComment(String content, Integer id);
 
     @Modifying
     @Query(value = "update `comment` set delete_flag = ?1 where id = ?2 and account_id = ?3", nativeQuery = true)

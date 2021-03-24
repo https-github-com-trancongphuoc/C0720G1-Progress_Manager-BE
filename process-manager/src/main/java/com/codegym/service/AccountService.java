@@ -1,6 +1,5 @@
 package com.codegym.service;
 
-
 import com.codegym.entity.Account;
 
 public interface AccountService {
@@ -11,5 +10,8 @@ public interface AccountService {
 
     Account getAccountByIdStudent(Integer id);
 
+    Account getAccountByIdTeacher(Integer id);
+  
     void changePassword(Account account);
+
 }

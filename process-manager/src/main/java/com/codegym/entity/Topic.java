@@ -13,6 +13,16 @@ public class Topic {
     private Integer id;
 
     private String name;
+    @Column(columnDefinition = "TEXT")
+    private String introduce;
+    @Column(columnDefinition = "TEXT")
+    private String image;
+    @Column(columnDefinition = "TEXT")
+    private String content;
+
+    @ManyToOne
+    @JoinColumn(name = "faculty_id", referencedColumnName = "id")
+    private Faculty faculty;
 
     private String content;
 
@@ -23,10 +33,13 @@ public class Topic {
 
     public Topic() {
     }
-
-    public Topic(Integer id, String name, String content, Faculty faculty) {
+  
+    public Topic(Integer id, String name, String introduce, String title, String image, String content, Faculty faculty) {
         this.id = id;
         this.name = name;
+        this.introduce = introduce;
+        this.image = image;
+
         this.content = content;
         this.faculty = faculty;
     }
@@ -45,6 +58,22 @@ public class Topic {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getIntroduce() {
+        return introduce;
+    }
+
+    public void setIntroduce(String introduce) {
+        this.introduce = introduce;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 
     public String getContent() {
