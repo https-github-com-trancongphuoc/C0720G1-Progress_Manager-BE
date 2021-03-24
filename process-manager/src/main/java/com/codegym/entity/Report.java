@@ -13,6 +13,17 @@ public class Report {
     @Column(columnDefinition = "text")
     private String url;
 
+    @Column(columnDefinition = "dateTime")
+    private String date;
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
     private String title;
     private String content;
     @Column(columnDefinition = "DATETIME")
@@ -25,9 +36,10 @@ public class Report {
     public Report() {
     }
 
-    public Report(Integer id, String url, String title, String content, String date, TopicProcess topicProcess) {
+    public Report(Integer id, String url, String date, String title, String content, TopicProcess topicProcess) {
         this.id = id;
         this.url = url;
+        this.date = date;
         this.title = title;
         this.content = content;
         this.date = date;

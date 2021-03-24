@@ -32,4 +32,8 @@ public class AccountServiceImpl implements AccountService {
         return accountRepository.findByTeacher_Id(id);
     }
 
+    @Override
+    public void changePassword(Account account) {
+        accountRepository.save(account);
+    }
 }

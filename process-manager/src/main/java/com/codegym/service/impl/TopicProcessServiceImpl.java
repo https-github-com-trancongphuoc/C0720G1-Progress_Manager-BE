@@ -18,7 +18,12 @@ public class TopicProcessServiceImpl implements TopicProcessService {
      * @return
      */
     @Override
-    public Optional<TopicProcess> findById(Integer id) {
+    public TopicProcess findById(Integer id) {
+        return topicProcessRepository.getByIdTopicProcess(id);
+    }
+
+    @Override
+    public Optional<TopicProcess> findById1(Integer id) {
         return topicProcessRepository.findById(id);
     }
 

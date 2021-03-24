@@ -1,7 +1,6 @@
 package com.codegym.controller;
 
 
-import com.codegym.dto.JwtRequest;
 import com.codegym.dto.JwtResponse;
 import com.codegym.entity.Account;
 import com.codegym.jwt.JwtUtility;
@@ -38,6 +37,7 @@ public class LoginController {
     @Autowired
     private AccountRoleService accountRoleService;
 
+
     @PostMapping("/login")
     private ResponseEntity<?> login(@RequestBody Account account) throws Exception {
 
@@ -57,5 +57,17 @@ public class LoginController {
         final String token = jwtUtility.generateToken(userService.loadUserByUsername(account.getUsername()));
 
         return new ResponseEntity<>(new JwtResponse(token, accountMain), HttpStatus.OK);
+    }
+
+
+
+    @PostMapping("/change-password")
+    private ResponseEntity<?> changePassword(@RequestBody Account account) {
+
+        Account newAccount = accountService.getAccountById(account.getId());
+        newAccount.setPassword(account.getPassword());
+        accountService.changePassword(newAccount);
+
+        return new ResponseEntity<>(newAccount, HttpStatus.OK);
     }
 }
