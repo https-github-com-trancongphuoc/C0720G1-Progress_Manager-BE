@@ -11,4 +11,7 @@ public interface AccountService {
     Account getAccountByIdStudent(Integer id);
 
     Account getAccountByIdTeacher(Integer id);
+  
+    void changePassword(Account account);
+
 }

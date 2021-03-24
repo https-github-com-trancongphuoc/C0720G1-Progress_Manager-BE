@@ -1,6 +1,7 @@
 package com.codegym.entity;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "faculty")
@@ -12,12 +13,16 @@ public class Faculty {
 
     private String name;
 
+    @OneToMany(mappedBy = "faculty")
+    private List<Topic> topicList;
+
     public Faculty() {
     }
 
-    public Faculty(Integer id, String name) {
+    public Faculty(Integer id, String name, List<Topic> topicList) {
         this.id = id;
         this.name = name;
+        this.topicList = topicList;
     }
 
     public Integer getId() {
@@ -34,5 +39,13 @@ public class Faculty {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public List<Topic> getTopicList() {
+        return topicList;
+    }
+
+    public void setTopicList(List<Topic> topicList) {
+        this.topicList = topicList;
     }
 }
