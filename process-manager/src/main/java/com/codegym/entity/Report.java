@@ -13,17 +13,6 @@ public class Report {
     @Column(columnDefinition = "text")
     private String url;
 
-    @Column(columnDefinition = "dateTime")
-    private String date;
-
-    public String getDate() {
-        return date;
-    }
-
-    public void setDate(String date) {
-        this.date = date;
-    }
-
     private String title;
     private String content;
     @Column(columnDefinition = "DATETIME")
