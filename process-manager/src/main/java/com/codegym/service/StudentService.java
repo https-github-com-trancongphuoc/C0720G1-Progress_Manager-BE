@@ -1,11 +1,13 @@
 package com.codegym.service;
 
 import com.codegym.dto.CreateUpdateStudentDTO;
+import com.codegym.dto.IStudentEditDTO;
 import com.codegym.entity.Student;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 public interface StudentService {
+
 
     /**
      * TinVT
@@ -35,5 +37,5 @@ public interface StudentService {
      * TinVT
      * Find By Id
      */
-    Student findById(Integer id);
+    IStudentEditDTO findStudentById(Integer id);
 }
