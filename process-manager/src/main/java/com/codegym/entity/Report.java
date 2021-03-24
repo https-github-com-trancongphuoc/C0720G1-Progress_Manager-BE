@@ -12,20 +12,11 @@ public class Report {
 
     @Column(columnDefinition = "text")
     private String url;
-
-    @Column(columnDefinition = "dateTime")
-    private String date;
-
-    public String getDate() {
-        return date;
-    }
-
-    public void setDate(String date) {
-        this.date = date;
-    }
-
+    
     private String title;
+    
     private String content;
+    
     @Column(columnDefinition = "DATETIME")
     private String date;
 
@@ -42,7 +33,6 @@ public class Report {
         this.date = date;
         this.title = title;
         this.content = content;
-        this.date = date;
         this.topicProcess = topicProcess;
     }
 
