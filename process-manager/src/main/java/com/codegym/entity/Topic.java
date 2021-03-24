@@ -20,12 +20,6 @@ public class Topic {
     @Column(columnDefinition = "TEXT")
     private String content;
 
-    @ManyToOne
-    @JoinColumn(name = "faculty_id", referencedColumnName = "id")
-    private Faculty faculty;
-
-    private String content;
-
     @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "faculty_id", referencedColumnName = "id")
@@ -39,7 +33,6 @@ public class Topic {
         this.name = name;
         this.introduce = introduce;
         this.image = image;
-
         this.content = content;
         this.faculty = faculty;
     }
