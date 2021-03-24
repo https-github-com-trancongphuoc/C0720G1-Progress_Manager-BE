@@ -14,9 +14,7 @@ public class Report {
     private String url;
 
     private String title;
-    
     private String content;
-    
     @Column(columnDefinition = "DATETIME")
     private String date;
 

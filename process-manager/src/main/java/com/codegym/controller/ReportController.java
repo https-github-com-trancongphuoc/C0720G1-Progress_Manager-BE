@@ -1,6 +1,7 @@
 package com.codegym.controller;
 
 import com.codegym.dto.ReportDto;
+import com.codegym.entity.Report;
 import com.codegym.entity.TopicProcess;
 import com.codegym.service.ReportService;
 import com.codegym.service.TopicProcessService;
@@ -12,6 +13,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -29,9 +32,13 @@ public class ReportController {
      * @return
      */
     @RequestMapping(value = "CheckCreateReport/{id}", method = RequestMethod.GET)
-    public ResponseEntity<TopicProcess> checkCreateReport(@PathVariable Integer id) {
+    public ResponseEntity<?> checkCreateReport(@PathVariable Integer id) {
         TopicProcess topicProcess = topicProcessService.findById(id);
-        return new ResponseEntity<TopicProcess>(topicProcess, HttpStatus.OK);
+        List<Report> reportList = reportService.getListUrl(id);
+        List list = new ArrayList();
+        list.add(topicProcess);
+        list.add(reportList);
+        return new ResponseEntity<>(list, HttpStatus.OK);
     }
 
     /**
@@ -45,6 +52,7 @@ public class ReportController {
         headers.setLocation(ucBuilder.path("/findById/{id}").buildAndExpand(reportDto.getId()).toUri());
         return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
     }
+
 
 
     /**
