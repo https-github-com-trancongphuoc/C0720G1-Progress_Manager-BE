@@ -1,11 +1,10 @@
 package com.codegym.service.impl;
 
+import com.codegym.dto.NotificationDTO;
 import com.codegym.entity.InfoTopicRegister;
 import com.codegym.entity.Student;
 import com.codegym.entity.Topic;
-import com.codegym.repository.InfoTopicRegisterRepository;
-import com.codegym.repository.StudentTopicRepository;
-import com.codegym.repository.TopicManagerRepository;
+import com.codegym.repository.*;
 import com.codegym.service.TopicManagerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;

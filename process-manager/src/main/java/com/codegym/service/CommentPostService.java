@@ -1,6 +1,7 @@
 package com.codegym.service;
 
 import com.codegym.dto.CommentPostDTO;
+import com.codegym.dto.NotificationDTO;
 import com.codegym.entity.Comment;
 import com.codegym.entity.Report;
 import org.springframework.data.domain.Page;
@@ -32,4 +33,7 @@ public interface CommentPostService {
     void deleteComment(Integer id);
 
     void questionStudent(CommentPostDTO commentPostDTO) throws MessagingException, UnsupportedEncodingException;
+
+    void createNotification(NotificationDTO notificationDTO);
+
 }

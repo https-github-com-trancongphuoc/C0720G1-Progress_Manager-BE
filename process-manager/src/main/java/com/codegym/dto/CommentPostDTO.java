@@ -14,6 +14,7 @@ public class CommentPostDTO {
     String email;
     Integer processDetailId;
     Integer teacherId;
+    Integer accountSendId;
 //    private Integer percentProcess;
 //    private Integer idProcess;
     ;
@@ -115,5 +116,13 @@ public class CommentPostDTO {
 
     public void setTeacherId(Integer teacherId) {
         this.teacherId = teacherId;
+    }
+
+    public Integer getAccountSendId() {
+        return accountSendId;
+    }
+
+    public void setAccountSendId(Integer accountSendId) {
+        this.accountSendId = accountSendId;
     }
 }
