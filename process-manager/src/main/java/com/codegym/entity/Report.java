@@ -12,11 +12,9 @@ public class Report {
 
     @Column(columnDefinition = "text")
     private String url;
-    
+
     private String title;
-    
     private String content;
-    
     @Column(columnDefinition = "DATETIME")
     private String date;
 
