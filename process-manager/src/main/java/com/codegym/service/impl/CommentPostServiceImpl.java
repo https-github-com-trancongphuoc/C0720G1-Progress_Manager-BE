@@ -2,7 +2,6 @@ package com.codegym.service.impl;
 
 import com.codegym.dto.CommentPostDTO;
 import com.codegym.dto.NotificationDTO;
-
 import com.codegym.entity.Comment;
 import com.codegym.entity.Report;
 import com.codegym.repository.CommentPostRepository;
@@ -114,5 +113,4 @@ public class CommentPostServiceImpl implements CommentPostService {
     public void createNotification(NotificationDTO notificationDTO) {
         notificationManagerRepository.createNotification(notificationDTO.getContent(), false, LocalDateTime.now().toString(), notificationDTO.getTitle(), notificationDTO.getAccountId(), notificationDTO.getAccountSendNotificationId());
     }
-
 }
