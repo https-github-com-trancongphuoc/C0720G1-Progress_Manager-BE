@@ -2,7 +2,6 @@ package com.codegym.service;
 
 import com.codegym.dto.CommentPostDTO;
 import com.codegym.dto.NotificationDTO;
-import com.codegym.dto.test.DTO;
 import com.codegym.entity.Comment;
 import com.codegym.entity.Report;
 import org.springframework.data.domain.Page;
