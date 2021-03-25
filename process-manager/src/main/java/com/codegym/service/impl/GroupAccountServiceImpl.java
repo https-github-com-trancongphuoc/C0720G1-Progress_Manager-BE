@@ -1,5 +1,6 @@
 package com.codegym.service.impl;
 
+import com.codegym.dto.CheckJoinGroupDTO;
 import com.codegym.dto.StudentInformation;
 import com.codegym.entity.GroupAccount;
 import com.codegym.entity.Student;
@@ -85,5 +86,21 @@ public class GroupAccountServiceImpl implements GroupAccountService {
             int id = student.getId();
             studentRepository.joinGroup(id, groupId);
         }
+    }
+
+    @Override
+    public CheckJoinGroupDTO checkJoinGroup(Integer accountId) {
+        return groupAccountRepository.checkJoinGroup(accountId);
+    }
+
+    @Override
+    public void acceptJoinGroupByAccount(Integer studentId) {
+        groupAccountRepository.acceptJoinGroupByAccount(studentId);
+    }
+
+    @Override
+    public void denyJoinGroupByAccount(Integer studentId) {
+        groupAccountRepository.denyJoinGroupByAccount(studentId);
+
     }
 }
