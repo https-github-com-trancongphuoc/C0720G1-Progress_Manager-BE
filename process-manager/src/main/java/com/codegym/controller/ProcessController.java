@@ -86,9 +86,9 @@ public class ProcessController {
                                                 @PageableDefault(size = 3) Pageable pageable) {
         Page<Comment> commentList = commentService.getListAppreciate(idProcessDetail, pageable);
 
-        if (commentList.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
+//        if (commentList.isEmpty()) {
+//            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+//        }
 
         List<CommentDTO> commentDTOList = new ArrayList<>();
 
