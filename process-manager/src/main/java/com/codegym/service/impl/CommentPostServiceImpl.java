@@ -5,11 +5,9 @@ import com.codegym.dto.NotificationDTO;
 
 import com.codegym.entity.Comment;
 import com.codegym.entity.Report;
-
 import com.codegym.repository.CommentPostRepository;
 import com.codegym.repository.NotificationManagerRepository;
 import com.codegym.repository.ReportPostRepository;
-
 import com.codegym.service.CommentPostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -116,6 +114,5 @@ public class CommentPostServiceImpl implements CommentPostService {
     public void createNotification(NotificationDTO notificationDTO) {
         notificationManagerRepository.createNotification(notificationDTO.getContent(), false, LocalDateTime.now().toString(), notificationDTO.getTitle(), notificationDTO.getAccountId(), notificationDTO.getAccountSendNotificationId());
     }
-
 
 }
