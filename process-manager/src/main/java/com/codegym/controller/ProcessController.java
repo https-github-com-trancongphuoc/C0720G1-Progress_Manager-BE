@@ -138,8 +138,9 @@ public class ProcessController {
         InfoTopicRegister infoTopicRegister = infoTopicRegisterService.getProcessDetailById(appreciateDTO.getIdProcessDetail());
         if (infoTopicRegister.getProcessList().get(infoTopicRegister.getProcessList().size() - 1).getPercentProcess() == 100) {
             infoTopicRegister.setStatusComplete(true);
+            infoTopicRegisterService.registerInfoTopic(infoTopicRegister);
         }
-        infoTopicRegisterService.registerInfoTopic(infoTopicRegister);
+
 
 
         // Lưu đánh giá của giáo viên vào DB
