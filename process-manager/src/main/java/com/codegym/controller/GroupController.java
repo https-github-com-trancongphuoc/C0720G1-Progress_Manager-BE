@@ -2,6 +2,7 @@ package com.codegym.controller;
 
 
 import com.codegym.entity.Student;
+import com.codegym.repository.AccountRepository;
 import com.codegym.repository.StudentRepository;
 import com.codegym.service.GroupAccountService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,9 @@ public class GroupController {
 
     @Autowired
     private StudentRepository studentRepository;
+
+    @Autowired
+    private AccountRepository accountRepository;
 
 //    @RequestMapping(value = "add-group/{nameGroup}/{accountId}", method = RequestMethod.POST)
 //    public ResponseEntity<?> addGroup(@PathVariable("nameGroup") String nameGroup,
@@ -85,11 +89,12 @@ public class GroupController {
         return new ResponseEntity<>(this.groupAccountService.searchGroup(searchName, pageable), HttpStatus.OK);
     }
 
-    @RequestMapping(value = "create-group/{nameGroup}", method = RequestMethod.POST)
+    @RequestMapping(value = "create-group/{nameGroup}/{accountId}", method = RequestMethod.POST)
     public ResponseEntity<?> add(@RequestBody List<Student> listStudentAdded,
-                                 @PathVariable("nameGroup") String nameGroup) {
+                                 @PathVariable("nameGroup") String nameGroup,
+                                 @PathVariable("accountId") Integer accountId) {
         this.groupAccountService.createGroup(nameGroup, listStudentAdded);
-        return new ResponseEntity<>(HttpStatus.CREATED);
+        return new ResponseEntity<>(this.accountRepository.findById(accountId), HttpStatus.CREATED);
     }
 
     @RequestMapping(value = "create-group-leader/{nameGroup}/{accountId}", method = RequestMethod.POST)
@@ -97,7 +102,24 @@ public class GroupController {
                                                   @PathVariable("nameGroup") String nameGroup,
                                                   @PathVariable("accountId") Integer accountId) {
         this.groupAccountService.createGroup(nameGroup, listStudentAdded);
-        this.groupAccountService.saveGroup(accountId,nameGroup);
-        return new ResponseEntity<>(HttpStatus.CREATED);
+        this.groupAccountService.saveGroup(accountId, nameGroup);
+        return new ResponseEntity<>(this.accountRepository.findById(accountId), HttpStatus.CREATED);
+    }
+
+    @RequestMapping(value = "check-join-group/{accountId}", method = RequestMethod.GET)
+    public ResponseEntity<?> checkJoinGroup(@PathVariable("accountId") Integer accountId) {
+        return new ResponseEntity<>(this.groupAccountService.checkJoinGroup(accountId),HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "accept-join-group/{studentId}", method = RequestMethod.GET)
+    public ResponseEntity<?> acceptJoinGroup(@PathVariable("studentId") Integer studentId) {
+        this.groupAccountService.acceptJoinGroupByAccount(studentId);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "deny-join-group/{studentId}", method = RequestMethod.GET)
+    public ResponseEntity<?> denyJoinGroup(@PathVariable("studentId") Integer studentId) {
+        this.groupAccountService.denyJoinGroupByAccount(studentId);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

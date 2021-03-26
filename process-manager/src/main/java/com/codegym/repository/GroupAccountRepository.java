@@ -1,5 +1,6 @@
 package com.codegym.repository;
 
+import com.codegym.dto.CheckJoinGroupDTO;
 import com.codegym.dto.StudentInformation;
 import com.codegym.entity.GroupAccount;
 import org.springframework.data.domain.Page;
@@ -86,5 +87,28 @@ public interface GroupAccountRepository extends JpaRepository<GroupAccount, Inte
 
 
     GroupAccount findByName(String nameGroup);
+
+    @Query(
+            value = "select student.status_join as statusJoin , student.group_account_id as groupAccountId\n" +
+                    "from student\n" +
+                    "where student.id = ?1 ",
+            nativeQuery = true)
+    CheckJoinGroupDTO checkJoinGroup(Integer accountId);
+
+    @Modifying
+    @Query(
+            value = "update student\n" +
+                    "set student.status_join = true\n" +
+                    "where id = ?1 ",
+            nativeQuery = true)
+    void acceptJoinGroupByAccount(Integer studentId);
+
+    @Modifying
+    @Query(
+            value = "update student " +
+                    "set student.group_account_id = null " +
+                    "where id = ?1",
+            nativeQuery = true)
+    void denyJoinGroupByAccount(Integer studentId);
 }
 

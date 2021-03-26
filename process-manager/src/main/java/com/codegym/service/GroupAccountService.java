@@ -1,6 +1,7 @@
 package com.codegym.service;
 
 
+import com.codegym.dto.CheckJoinGroupDTO;
 import com.codegym.dto.StudentInformation;
 import com.codegym.entity.GroupAccount;
 import com.codegym.entity.Student;
@@ -29,4 +30,10 @@ public interface GroupAccountService {
     GroupAccount getGroupById(Integer id);
 
     void createGroup(String nameGroup, List<Student> studentList);
+
+    CheckJoinGroupDTO checkJoinGroup(Integer accountId);
+
+    void acceptJoinGroupByAccount(Integer studentId);
+
+    void denyJoinGroupByAccount(Integer studentId);
 }
