@@ -110,5 +110,8 @@ public interface GroupAccountRepository extends JpaRepository<GroupAccount, Inte
                     "where id = ?1",
             nativeQuery = true)
     void denyJoinGroupByAccount(Integer studentId);
+
+    @Query(value = "select *from process_manager.group_account",nativeQuery = true)
+    List<GroupAccount> findAllGroup();
 }
 

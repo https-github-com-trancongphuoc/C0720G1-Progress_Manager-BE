@@ -24,6 +24,11 @@ public class GroupAccountServiceImpl implements GroupAccountService {
     private StudentRepository studentRepository;
 
     @Override
+    public List<GroupAccount> findAll() {
+        return groupAccountRepository.findAllGroup();
+    }
+
+    @Override
     public void saveGroup(Integer leaderId,String nameGroup) {
         groupAccountRepository.setLeaderGroup(leaderId);
         GroupAccount groupAccount;
