@@ -16,23 +16,23 @@ import java.util.List;
 @Transactional
 public interface TeacherRepository extends JpaRepository<Teacher, Integer> {
     @Query(value = "select * from teacher join degree on teacher.degree_id = degree.id join faculty on teacher.faculty_id = faculty.id" +
-            " where concat('MGV-',teacher.id,ifnull(teacher.address,''),ifnull(teacher.date_of_birth,''),ifnull(teacher.phone,''),ifnull(teacher.email,''),ifnull(teacher.name,''),degree.name,faculty.name) like %?1%",nativeQuery = true)
+            " where concat('MGV-',teacher.id,ifnull(teacher.address,''),ifnull(teacher.date_of_birth,''),ifnull(teacher.phone,''),ifnull(teacher.email,''),ifnull(teacher.name,''),degree.name,faculty.name) like %?1% and teacher.delete_flag = 1" ,nativeQuery = true)
     Page<Teacher> getAllTeacher(String find, Pageable pageable);
 
 
     @Modifying
     @Query(value = "insert  into teacher(teacher.address, teacher.avatar, teacher.date_of_birth, teacher.email, teacher.name, teacher.phone," +
-            "teacher.degree_id, teacher.faculty_id, teacher.gender) value (?1,?2,?3,?4,?5,?6,?7,?8,?9)",nativeQuery = true)
+            "teacher.degree_id, teacher.faculty_id, teacher.gender, teacher.delete_flag) value (?1,?2,?3,?4,?5,?6,?7,?8,?9, true )",nativeQuery = true)
     void createTeacher(String address, String avatar, String dateOfBirth, String email, String name, String phone, Integer degreeId, Integer facultyId, Boolean gender);
 
 
     @Modifying
-    @Query(value = "DELETE from teacher where teacher.id = ?1",nativeQuery = true)
-    void deleteStudent(Integer id);
+    @Query(value = "update teacher set teacher.delete_flag = 0 where teacher.id = ?1",nativeQuery = true)
+    void deleteTeacher(Integer id);
 
     @Query(value = "select teacher.id as id, teacher.address as address, teacher.avatar as avatar, teacher.date_of_birth as dateOfBirth," +
             "teacher.email as email, teacher.name as name, teacher.phone as phone, teacher.degree_id as degree, teacher.faculty_id as faculty," +
-            "teacher.gender as gender from teacher where teacher.id = ?1", nativeQuery = true)
+            "teacher.gender as gender from teacher where teacher.id = ?1 and teacher.delete_flag = true", nativeQuery = true)
     ITeacherEditDTO getTeacherById(Integer id);
 
     @Modifying

@@ -19,7 +19,7 @@ public class Teacher {
     private String email;
     private String avatar;
     private Boolean gender;
-
+    private Boolean delete_flag;
     @ManyToOne
     @JoinColumn(name = "faculty_id", referencedColumnName = "id")
     private Faculty faculty;
@@ -36,7 +36,7 @@ public class Teacher {
     public Teacher() {
     }
 
-    public Teacher(Integer id, String name, String dateOfBirth, String address, String phone, String email, String avatar, Boolean gender, Faculty faculty, Degree degree, Account account) {
+    public Teacher(Integer id, String name, String dateOfBirth, String address, String phone, String email, String avatar, Boolean gender, Boolean delete_flag, Faculty faculty, Degree degree, Account account) {
         this.id = id;
         this.name = name;
         this.dateOfBirth = dateOfBirth;
@@ -45,9 +45,18 @@ public class Teacher {
         this.email = email;
         this.avatar = avatar;
         this.gender = gender;
+        this.delete_flag = delete_flag;
         this.faculty = faculty;
         this.degree = degree;
         this.account = account;
+    }
+
+    public Boolean getDelete_flag() {
+        return delete_flag;
+    }
+
+    public void setDelete_flag(Boolean delete_flag) {
+        this.delete_flag = delete_flag;
     }
 
     public Integer getId() {
