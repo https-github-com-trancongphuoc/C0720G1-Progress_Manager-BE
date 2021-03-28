@@ -19,6 +19,7 @@ public class Student {
     private String email;
     private String avatar;
     private Boolean gender;
+    private Boolean delete_flag;
     private Boolean status_join;
 
     @ManyToOne
@@ -37,7 +38,7 @@ public class Student {
     public Student() {
     }
 
-    public Student(Integer id, String name, String dateOfBirth, String address, String phone, String email, String avatar, Boolean gender, Boolean status_join, Grade grade, GroupAccount groupAccount, Account account) {
+    public Student(Integer id, String name, String dateOfBirth, String address, String phone, String email, String avatar, Boolean gender, Boolean delete_flag, Boolean status_join, Grade grade, GroupAccount groupAccount, Account account) {
         this.id = id;
         this.name = name;
         this.dateOfBirth = dateOfBirth;
@@ -46,10 +47,19 @@ public class Student {
         this.email = email;
         this.avatar = avatar;
         this.gender = gender;
+        this.delete_flag = delete_flag;
         this.status_join = status_join;
         this.grade = grade;
         this.groupAccount = groupAccount;
         this.account = account;
+    }
+
+    public Boolean getDelete_flag() {
+        return delete_flag;
+    }
+
+    public void setDelete_flag(Boolean delete_flag) {
+        this.delete_flag = delete_flag;
     }
 
     public Integer getId() {

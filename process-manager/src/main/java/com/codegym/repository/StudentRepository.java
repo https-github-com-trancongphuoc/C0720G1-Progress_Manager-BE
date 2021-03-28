@@ -18,7 +18,7 @@ public interface StudentRepository extends JpaRepository<Student, Integer> {
      * Get All Student
      */
     @Query(value = "SELECT * from student join grade on student.grade_id = grade.id join faculty on grade.faculty_id = faculty.id " +
-            "WHERE CONCAT('MSV-',student.id,ifnull(student.name,''),ifnull(student.address,''),ifnull(student.date_of_birth,''),ifnull(student.email,''),ifnull(student.phone,''), faculty.name) LIKE %?1% ", nativeQuery = true)
+            "WHERE CONCAT('MSV-',student.id,ifnull(student.name,''),ifnull(student.address,''),ifnull(student.date_of_birth,''),ifnull(student.email,''),ifnull(student.phone,''), faculty.name) LIKE %?1% and student.delete_flag = 1", nativeQuery = true)
     Page<Student> getAllStudent(String find, Pageable pageable);
 
     /**
@@ -26,7 +26,7 @@ public interface StudentRepository extends JpaRepository<Student, Integer> {
      * Delete Student By id
      */
     @Modifying
-    @Query(value = "DELETE from student where student.id = ?1",nativeQuery = true)
+    @Query(value = "update student set student.delete_flag = 0 where student.id = ?1",nativeQuery = true)
     void deleteStudent(Integer id);
 
     /**
@@ -44,8 +44,8 @@ public interface StudentRepository extends JpaRepository<Student, Integer> {
      */
     @Modifying
     @Query(value = "insert into student(student.name, student.email, student.avatar, student.address, " +
-            " student.date_of_birth, student.phone, student.grade_id, student.gender)" +
-            "values(?1,?2,?3,?4,?5,?6,?7,?8) ",nativeQuery = true)
+            " student.date_of_birth, student.phone, student.grade_id, student.gender, student.delete_flag)" +
+            "values(?1,?2,?3,?4,?5,?6,?7,?8, true) ",nativeQuery = true)
     void addNewStudent(String name, String email, String avatar, String address, String dayOfBirth,String phone, Integer grade, Boolean gender);
 
     /**
@@ -53,7 +53,7 @@ public interface StudentRepository extends JpaRepository<Student, Integer> {
      * find By Id
      */
     @Query(value = "select student.id as id, student.name as name, student.date_of_birth as dateOfBirth, student.phone as phone," +
-            "student.grade_id as grade, student.address as address, student.email as email, student.avatar as image, student.gender as gender from student where student.id = ?1", nativeQuery = true)
+            "student.grade_id as grade, student.address as address, student.email as email, student.avatar as image, student.gender as gender from student where student.id = ?1 and student.delete_flag = 1", nativeQuery = true)
     IStudentEditDTO findStudentById(Integer id);
 
 
