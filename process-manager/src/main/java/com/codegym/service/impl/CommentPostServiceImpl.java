@@ -1,9 +1,11 @@
 package com.codegym.service.impl;
 
 import com.codegym.dto.CommentPostDTO;
+import com.codegym.dto.NotificationDTO;
 import com.codegym.entity.Comment;
 import com.codegym.entity.Report;
 import com.codegym.repository.CommentPostRepository;
+import com.codegym.repository.NotificationManagerRepository;
 import com.codegym.repository.ReportPostRepository;
 import com.codegym.service.CommentPostService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +28,9 @@ public class CommentPostServiceImpl implements CommentPostService {
 
     @Autowired
     ReportPostRepository reportPostRepository;
+
+    @Autowired
+    NotificationManagerRepository notificationManagerRepository;
 
     @Autowired
     JavaMailSender javaMailSender;
@@ -104,5 +109,8 @@ public class CommentPostServiceImpl implements CommentPostService {
         javaMailSender.send(message);
     }
 
-
+    @Override
+    public void createNotification(NotificationDTO notificationDTO) {
+        notificationManagerRepository.createNotification(notificationDTO.getContent(), false, LocalDateTime.now().toString(), notificationDTO.getTitle(), notificationDTO.getAccountId(), notificationDTO.getAccountSendNotificationId());
+    }
 }

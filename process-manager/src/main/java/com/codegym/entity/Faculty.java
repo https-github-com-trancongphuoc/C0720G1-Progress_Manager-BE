@@ -1,5 +1,7 @@
 package com.codegym.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -13,6 +15,7 @@ public class Faculty {
 
     private String name;
 
+    @JsonBackReference
     @OneToMany(mappedBy = "faculty")
     private List<Topic> topicList;
 

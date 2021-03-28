@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import javax.persistence.*;
 import java.util.List;
+
 @JsonIdentityInfo(
         generator = ObjectIdGenerators.PropertyGenerator.class,
         property = "id")
@@ -20,6 +21,8 @@ public class GroupAccount {
 
     private boolean delete_flag;
 
+    private boolean status;
+
     @OneToMany(mappedBy = "groupAccount")
     private List<Student> studentList;
 
@@ -29,10 +32,11 @@ public class GroupAccount {
     public GroupAccount() {
     }
 
-    public GroupAccount(Integer id, String name, boolean delete_flag, List<Student> studentList, List<InfoTopicRegister> infoTopicRegisterList) {
+    public GroupAccount(Integer id, String name, boolean delete_flag, boolean status, List<Student> studentList, List<InfoTopicRegister> infoTopicRegisterList) {
         this.id = id;
         this.name = name;
         this.delete_flag = delete_flag;
+        this.status = status;
         this.studentList = studentList;
         this.infoTopicRegisterList = infoTopicRegisterList;
     }
@@ -59,6 +63,14 @@ public class GroupAccount {
 
     public void setDelete_flag(boolean delete_flag) {
         this.delete_flag = delete_flag;
+    }
+
+    public boolean isStatus() {
+        return status;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
     }
 
     public List<Student> getStudentList() {

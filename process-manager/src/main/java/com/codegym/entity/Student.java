@@ -20,6 +20,7 @@ public class Student {
     private String avatar;
     private Boolean gender;
     private Boolean delete_flag;
+    private Boolean status_join;
 
     @ManyToOne
     @JoinColumn(name = "grade_id", referencedColumnName = "id")
@@ -37,7 +38,7 @@ public class Student {
     public Student() {
     }
 
-    public Student(Integer id, String name, String dateOfBirth, String address, String phone, String email, String avatar, Boolean gender, Boolean delete_flag, Grade grade, GroupAccount groupAccount, Account account) {
+    public Student(Integer id, String name, String dateOfBirth, String address, String phone, String email, String avatar, Boolean gender, Boolean delete_flag, Boolean status_join, Grade grade, GroupAccount groupAccount, Account account) {
         this.id = id;
         this.name = name;
         this.dateOfBirth = dateOfBirth;
@@ -47,6 +48,7 @@ public class Student {
         this.avatar = avatar;
         this.gender = gender;
         this.delete_flag = delete_flag;
+        this.status_join = status_join;
         this.grade = grade;
         this.groupAccount = groupAccount;
         this.account = account;
@@ -122,6 +124,14 @@ public class Student {
 
     public void setGender(Boolean gender) {
         this.gender = gender;
+    }
+
+    public Boolean getStatus_join() {
+        return status_join;
+    }
+
+    public void setStatus_join(Boolean status_join) {
+        this.status_join = status_join;
     }
 
     public Grade getGrade() {

@@ -1,9 +1,9 @@
 package com.codegym.service.impl;
 
+import com.codegym.dto.CheckJoinGroupDTO;
 import com.codegym.dto.StudentInformation;
 import com.codegym.entity.GroupAccount;
 import com.codegym.entity.Student;
-import com.codegym.entity.GroupAccount;
 import com.codegym.repository.GroupAccountRepository;
 import com.codegym.repository.StudentRepository;
 import com.codegym.service.GroupAccountService;
@@ -24,9 +24,12 @@ public class GroupAccountServiceImpl implements GroupAccountService {
     private StudentRepository studentRepository;
 
     @Override
-    public void saveGroup(String name, Integer leaderId) {
-        groupAccountRepository.saveGroup(name);
-        groupAccountRepository.saveGroup(leaderId);
+    public void saveGroup(Integer leaderId,String nameGroup) {
+        groupAccountRepository.setLeaderGroup(leaderId);
+        GroupAccount groupAccount;
+        groupAccount = groupAccountRepository.findByName(nameGroup);
+        Integer groupId = groupAccount.getId();
+        groupAccountRepository.acceptJoinGroup(groupId,leaderId);
     }
 
     @Override
@@ -45,8 +48,11 @@ public class GroupAccountServiceImpl implements GroupAccountService {
     }
 
     @Override
-    public void deleteGroup(Integer groupId) {
+    public void deleteGroup(Integer groupId, List<Integer> integerList) {
         groupAccountRepository.deleteGroup(groupId);
+        for (Integer id : integerList) {
+            studentRepository.deleteGroupOfStudentById(id);
+        }
     }
 
     @Override
@@ -64,9 +70,37 @@ public class GroupAccountServiceImpl implements GroupAccountService {
         groupAccountRepository.acceptGroup(groupId);
     }
 
-    
+
     @Override
     public GroupAccount getGroupById(Integer id) {
         return groupAccountRepository.findById(id).orElse(null);
+    }
+
+    @Override
+    public void createGroup(String nameGroup, List<Student> studentList) {
+        groupAccountRepository.saveGroup(nameGroup);
+        GroupAccount groupAccount;
+        groupAccount = groupAccountRepository.findByName(nameGroup);
+        Integer groupId = groupAccount.getId();
+        for (Student student : studentList) {
+            int id = student.getId();
+            studentRepository.joinGroup(id, groupId);
+        }
+    }
+
+    @Override
+    public CheckJoinGroupDTO checkJoinGroup(Integer accountId) {
+        return groupAccountRepository.checkJoinGroup(accountId);
+    }
+
+    @Override
+    public void acceptJoinGroupByAccount(Integer studentId) {
+        groupAccountRepository.acceptJoinGroupByAccount(studentId);
+    }
+
+    @Override
+    public void denyJoinGroupByAccount(Integer studentId) {
+        groupAccountRepository.denyJoinGroupByAccount(studentId);
+
     }
 }
