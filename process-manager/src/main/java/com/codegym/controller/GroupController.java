@@ -1,6 +1,7 @@
 package com.codegym.controller;
 
 
+import com.codegym.entity.GroupAccount;
 import com.codegym.entity.Student;
 import com.codegym.repository.AccountRepository;
 import com.codegym.repository.StudentRepository;
@@ -66,6 +67,7 @@ public class GroupController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+
     @RequestMapping(value = "student-group/{groupId}", method = RequestMethod.GET)
     public ResponseEntity<?> getStudentGroup(@PathVariable("groupId") Integer groupId) {
         return new ResponseEntity<>(this.groupAccountService.getStudentGroup(groupId), HttpStatus.OK);
@@ -90,20 +92,30 @@ public class GroupController {
     }
 
     @RequestMapping(value = "create-group/{nameGroup}/{accountId}", method = RequestMethod.POST)
-    public ResponseEntity<?> add(@RequestBody List<Student> listStudentAdded,
+    public ResponseEntity<List<GroupAccount>> add(@RequestBody List<Student> listStudentAdded,
                                  @PathVariable("nameGroup") String nameGroup,
                                  @PathVariable("accountId") Integer accountId) {
         this.groupAccountService.createGroup(nameGroup, listStudentAdded);
-        return new ResponseEntity<>(this.accountRepository.findById(accountId), HttpStatus.CREATED);
+        List<GroupAccount> list = this.groupAccountService.findAll();
+        System.out.println(list.get(list.size()-1).getId());
+        return new ResponseEntity<>(list,HttpStatus.CREATED);
+    }
+
+    @RequestMapping(value = "getAllGroupAccount",method = RequestMethod.GET)
+    public ResponseEntity<?> getAllGroupAccount(){
+        List<GroupAccount> list = this.groupAccountService.findAll();
+        return new ResponseEntity<>(list.get(list.size()-1).getId(),HttpStatus.OK);
     }
 
     @RequestMapping(value = "create-group-leader/{nameGroup}/{accountId}", method = RequestMethod.POST)
-    public ResponseEntity<?> createGroupAndLeader(@RequestBody List<Student> listStudentAdded,
+    public ResponseEntity<List<GroupAccount>> createGroupAndLeader(@RequestBody List<Student> listStudentAdded,
                                                   @PathVariable("nameGroup") String nameGroup,
                                                   @PathVariable("accountId") Integer accountId) {
         this.groupAccountService.createGroup(nameGroup, listStudentAdded);
         this.groupAccountService.saveGroup(accountId, nameGroup);
-        return new ResponseEntity<>(this.accountRepository.findById(accountId), HttpStatus.CREATED);
+        List<GroupAccount> list = this.groupAccountService.findAll();
+        GroupAccount groupAccount = list.get(list.size()-1);
+        return new ResponseEntity<>(list, HttpStatus.CREATED);
     }
 
     @RequestMapping(value = "check-join-group/{accountId}", method = RequestMethod.GET)
