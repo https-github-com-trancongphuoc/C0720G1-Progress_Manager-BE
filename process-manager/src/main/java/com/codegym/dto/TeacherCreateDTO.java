@@ -10,6 +10,7 @@ public class TeacherCreateDTO {
     private Integer facultyId;
     private Integer degreeId;
     private Boolean gender;
+    private Boolean deleteFlag;
 
     public TeacherCreateDTO() {
     }
@@ -84,5 +85,13 @@ public class TeacherCreateDTO {
 
     public void setGender(Boolean gender) {
         this.gender = gender;
+    }
+
+    public Boolean getDeleteFlag() {
+        return deleteFlag;
+    }
+
+    public void setDeleteFlag(Boolean deleteFlag) {
+        this.deleteFlag = deleteFlag;
     }
 }

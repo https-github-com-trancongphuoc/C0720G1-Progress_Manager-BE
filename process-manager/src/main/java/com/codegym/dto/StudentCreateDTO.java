@@ -9,11 +9,12 @@ public class StudentCreateDTO {
     private String email;
     private Boolean gender;
     private Integer gradeId;
+    private Boolean deleteFlag;
 
     public StudentCreateDTO() {
     }
 
-    public StudentCreateDTO(Integer id, String name, String dateOfBirth, String address, String phone, String email, Boolean gender, Integer gradeId) {
+    public StudentCreateDTO(Integer id, String name, String dateOfBirth, String address, String phone, String email, Boolean gender, Integer gradeId, Boolean deleteFlag) {
         this.id = id;
         this.name = name;
         this.dateOfBirth = dateOfBirth;
@@ -22,6 +23,7 @@ public class StudentCreateDTO {
         this.email = email;
         this.gender = gender;
         this.gradeId = gradeId;
+        this.deleteFlag = deleteFlag;
     }
 
     public Integer getId() {
@@ -86,5 +88,13 @@ public class StudentCreateDTO {
 
     public void setGradeId(Integer gradeId) {
         this.gradeId = gradeId;
+    }
+
+    public Boolean getDeleteFlag() {
+        return deleteFlag;
+    }
+
+    public void setDeleteFlag(Boolean deleteFlag) {
+        this.deleteFlag = deleteFlag;
     }
 }
