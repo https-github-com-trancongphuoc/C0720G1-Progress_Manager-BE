@@ -1,7 +1,9 @@
 package com.codegym.controller;
 import com.codegym.dto.CreateUpdateStudentDTO;
 import com.codegym.dto.IStudentEditDTO;
+import com.codegym.entity.Account;
 import com.codegym.entity.Student;
+import com.codegym.service.AccountService;
 import com.codegym.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -16,6 +18,9 @@ import org.springframework.web.bind.annotation.*;
 public class StudentController {
     @Autowired
     StudentService studentService;
+
+    @Autowired
+    AccountService accountService;
 
     /**
      * TinVT
@@ -57,10 +62,20 @@ public class StudentController {
      */
     @RequestMapping(value = "/create-student")
     public ResponseEntity<CreateUpdateStudentDTO> createStudent(@RequestBody CreateUpdateStudentDTO studentDTO){
+
+
         if(studentDTO == null){
             return new ResponseEntity<CreateUpdateStudentDTO>(HttpStatus.BAD_REQUEST);
         }
+        Account account = new Account();
+        account.setUsername(studentDTO.getEmail());
+        account.setPassword("123");
+        account = accountService.registerAccount(account);
+
+        studentDTO.setAccountId(account.getId());
         studentService.createNewStudent(studentDTO);
+
+
         return new ResponseEntity<CreateUpdateStudentDTO>(studentDTO, HttpStatus.OK);
     }
 

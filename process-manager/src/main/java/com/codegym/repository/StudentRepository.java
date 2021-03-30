@@ -44,9 +44,9 @@ public interface StudentRepository extends JpaRepository<Student, Integer> {
      */
     @Modifying
     @Query(value = "insert into student(student.name, student.email, student.avatar, student.address, " +
-            " student.date_of_birth, student.phone, student.grade_id, student.gender, student.delete_flag)" +
-            "values(?1,?2,?3,?4,?5,?6,?7,?8, true) ",nativeQuery = true)
-    void addNewStudent(String name, String email, String avatar, String address, String dayOfBirth,String phone, Integer grade, Boolean gender);
+            " student.date_of_birth, student.phone, student.grade_id, student.account_id, student.gender, student.delete_flag)" +
+            "values(?1,?2,?3,?4,?5,?6,?7,?8,?9, true) ",nativeQuery = true)
+    void addNewStudent(String name, String email, String avatar, String address, String dayOfBirth,String phone, Integer grade,Integer accountId, Boolean gender);
 
     /**
      * TinVT

@@ -10,8 +10,22 @@ public class CreateUpdateStudentDTO {
     private String image;
     private Boolean gender;
     private Integer grade;
+    private Integer accountId;
 
     public CreateUpdateStudentDTO() {
+    }
+
+    public CreateUpdateStudentDTO(Integer id, String name, String dateOfBirth, String address, String phone, String email, String image, Boolean gender, Integer grade, Integer accountId) {
+        this.id = id;
+        this.name = name;
+        this.dateOfBirth = dateOfBirth;
+        this.address = address;
+        this.phone = phone;
+        this.email = email;
+        this.image = image;
+        this.gender = gender;
+        this.grade = grade;
+        this.accountId = accountId;
     }
 
     public Integer getId() {
@@ -62,14 +76,6 @@ public class CreateUpdateStudentDTO {
         this.email = email;
     }
 
-    public Boolean getGender() {
-        return gender;
-    }
-
-    public void setGender(Boolean gender) {
-        this.gender = gender;
-    }
-
     public String getImage() {
         return image;
     }
@@ -78,11 +84,27 @@ public class CreateUpdateStudentDTO {
         this.image = image;
     }
 
+    public Boolean getGender() {
+        return gender;
+    }
+
+    public void setGender(Boolean gender) {
+        this.gender = gender;
+    }
+
     public Integer getGrade() {
         return grade;
     }
 
     public void setGrade(Integer grade) {
         this.grade = grade;
+    }
+
+    public Integer getAccountId() {
+        return accountId;
+    }
+
+    public void setAccountId(Integer accountId) {
+        this.accountId = accountId;
     }
 }

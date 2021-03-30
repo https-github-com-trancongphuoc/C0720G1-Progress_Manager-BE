@@ -14,4 +14,5 @@ public interface AccountService {
   
     void changePassword(Account account);
 
+    Account registerAccount(Account account);
 }
