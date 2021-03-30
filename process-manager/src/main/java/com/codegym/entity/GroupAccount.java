@@ -23,6 +23,9 @@ public class GroupAccount {
 
     private boolean status;
 
+    @Column(columnDefinition = "DATE")
+    private String date;
+
     @OneToMany(mappedBy = "groupAccount")
     private List<Student> studentList;
 
@@ -32,11 +35,12 @@ public class GroupAccount {
     public GroupAccount() {
     }
 
-    public GroupAccount(Integer id, String name, boolean delete_flag, boolean status, List<Student> studentList, List<InfoTopicRegister> infoTopicRegisterList) {
+    public GroupAccount(Integer id, String name, boolean delete_flag, boolean status, String date, List<Student> studentList, List<InfoTopicRegister> infoTopicRegisterList) {
         this.id = id;
         this.name = name;
         this.delete_flag = delete_flag;
         this.status = status;
+        this.date = date;
         this.studentList = studentList;
         this.infoTopicRegisterList = infoTopicRegisterList;
     }
@@ -71,6 +75,14 @@ public class GroupAccount {
 
     public void setStatus(boolean status) {
         this.status = status;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
     }
 
     public List<Student> getStudentList() {
