@@ -52,7 +52,7 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public void createNewStudent(CreateUpdateStudentDTO studentDTO) {
         studentRepository.addNewStudent(studentDTO.getName(), studentDTO.getEmail(), studentDTO.getImage(), studentDTO.getAddress(),
-                studentDTO.getDateOfBirth(), studentDTO.getPhone(), studentDTO.getGrade(), studentDTO.getGender());
+                studentDTO.getDateOfBirth(), studentDTO.getPhone(), studentDTO.getGrade(),studentDTO.getAccountId(), studentDTO.getGender());
     }
 
     @Override

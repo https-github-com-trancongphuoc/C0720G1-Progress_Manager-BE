@@ -36,4 +36,9 @@ public class AccountServiceImpl implements AccountService {
     public void changePassword(Account account) {
         accountRepository.save(account);
     }
+
+    @Override
+    public Account registerAccount(Account account) {
+        return accountRepository.save(account);
+    }
 }
