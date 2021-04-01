@@ -17,6 +17,9 @@ public class InfoTopicRegister {
     // Kiểm tra xem đã hoàn thành đề tài này hay chưa
     private Boolean statusComplete;
 
+    // Hủy đề tài
+    private Boolean topicCancel;
+
     @Column(columnDefinition = "TEXT")
     private String descriptionURL;
 
@@ -38,10 +41,11 @@ public class InfoTopicRegister {
     public InfoTopicRegister() {
     }
 
-    public InfoTopicRegister(Integer id, Boolean status, Boolean statusComplete, String descriptionURL, Topic topic, GroupAccount groupAccount, Teacher teacher, List<TopicProcess> processList) {
+    public InfoTopicRegister(Integer id, Boolean status, Boolean statusComplete, Boolean topicCancel, String descriptionURL, Topic topic, GroupAccount groupAccount, Teacher teacher, List<TopicProcess> processList) {
         this.id = id;
         this.status = status;
         this.statusComplete = statusComplete;
+        this.topicCancel = topicCancel;
         this.descriptionURL = descriptionURL;
         this.topic = topic;
         this.groupAccount = groupAccount;
@@ -71,6 +75,14 @@ public class InfoTopicRegister {
 
     public void setStatusComplete(Boolean statusComplete) {
         this.statusComplete = statusComplete;
+    }
+
+    public Boolean getTopicCancel() {
+        return topicCancel;
+    }
+
+    public void setTopicCancel(Boolean cancelTopic) {
+        this.topicCancel = cancelTopic;
     }
 
     public String getDescriptionURL() {

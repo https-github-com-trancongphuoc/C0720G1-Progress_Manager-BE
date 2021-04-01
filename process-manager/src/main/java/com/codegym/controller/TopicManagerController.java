@@ -1,5 +1,10 @@
 package com.codegym.controller;
 
+import com.codegym.dto.CommentPostDTO;
+import com.codegym.dto.GroupAccountDTO;
+import com.codegym.dto.InfoTopicRegisterDTO;
+import com.codegym.dto.NotificationDTO;
+import com.codegym.entity.Comment;
 import com.codegym.entity.InfoTopicRegister;
 import com.codegym.entity.Student;
 import com.codegym.entity.Topic;
@@ -7,11 +12,16 @@ import com.codegym.service.TopicManagerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.util.UriComponentsBuilder;
 
+import javax.mail.MessagingException;
+import javax.validation.Valid;
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 @RestController
@@ -61,7 +71,7 @@ public class TopicManagerController {
     /**
      * TrungTQ Code: Dùng để lấy thông tin nhóm dự án ở id=?
      */
-        @RequestMapping(value = "/findByGroup/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/findByGroup/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<InfoTopicRegister> findInfoRegisterById(@PathVariable("id") Integer id) {
         InfoTopicRegister groupAccount = topicManagerService.findAllByGroupAccount(id);
         if (groupAccount == null) {
@@ -77,5 +87,20 @@ public class TopicManagerController {
             return new ResponseEntity<List<Student>>(HttpStatus.NO_CONTENT);
         }
         return new ResponseEntity<List<Student>>(student, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/cancel-topic", method = RequestMethod.POST)
+    public ResponseEntity<Void> deleteTopic(@Valid @RequestBody InfoTopicRegisterDTO infoTopicRegisterDTO, UriComponentsBuilder ucBuilder) throws UnsupportedEncodingException, MessagingException {
+        topicManagerService.sendStudent(infoTopicRegisterDTO);
+        topicManagerService.deleteTopic(infoTopicRegisterDTO.getTopicId());
+        topicManagerService.topicCancel(infoTopicRegisterDTO.getId());
+        return new ResponseEntity<Void>(HttpStatus.CREATED);
+    }
+
+    @RequestMapping(value = "/update-deadline", method = RequestMethod.POST)
+    public ResponseEntity<Void> deadline(@Valid @RequestBody GroupAccountDTO groupAccountDTO, UriComponentsBuilder ucBuilder) throws UnsupportedEncodingException, MessagingException {
+        topicManagerService.sendStudentDeadline(groupAccountDTO);
+        topicManagerService.updateDeadline(groupAccountDTO);
+        return new ResponseEntity<Void>(HttpStatus.CREATED);
     }
 }

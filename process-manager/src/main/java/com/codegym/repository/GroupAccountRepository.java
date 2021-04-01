@@ -113,5 +113,9 @@ public interface GroupAccountRepository extends JpaRepository<GroupAccount, Inte
 
     @Query(value = "select *from process_manager.group_account",nativeQuery = true)
     List<GroupAccount> findAllGroup();
+
+    @Modifying
+    @Query(value = "UPDATE `process_manager`.`group_account` SET `date` = ?1 WHERE (`id` = ?2)",nativeQuery = true)
+    void updateDeadline(String date, Integer id);
 }
 

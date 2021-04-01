@@ -1,11 +1,15 @@
 package com.codegym.service;
 
+import com.codegym.dto.GroupAccountDTO;
+import com.codegym.dto.InfoTopicRegisterDTO;
 import com.codegym.entity.InfoTopicRegister;
 import com.codegym.entity.Student;
 import com.codegym.entity.Topic;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import javax.mail.MessagingException;
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 public interface TopicManagerService {
@@ -19,4 +23,24 @@ public interface TopicManagerService {
     InfoTopicRegister findAllByGroupAccount(Integer id);
 
     List<Student> findAllStudent(Integer id);
+
+    void topicCancel(Integer id);
+
+    void deleteTopic(Integer id);
+
+    void updateDeadline(GroupAccountDTO groupAccountDTO);
+
+    void sendStudent(InfoTopicRegisterDTO infoTopicRegisterDTO) throws MessagingException, UnsupportedEncodingException;
+
+    List<String> listEmailStudent();
+
+    List<String> listEmailTeacher();
+
+    List<String> listEmailStudentFinish();
+
+    List<String> listEmailTeacherFinish();
+
+    List<String> listEmailStudentDeadline();
+
+    void sendStudentDeadline(GroupAccountDTO groupAccountDTO)throws MessagingException, UnsupportedEncodingException;;
 }
