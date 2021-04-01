@@ -38,6 +38,6 @@ public class InfoTopicRegisterServiceImpl implements InfoTopicRegisterService {
 
     @Override
     public Page<InfoTopicRegister> getListTopicNotApproval(Integer idFaculty, Pageable pageable) {
-        return infoTopicRegisterRepository.findAllByTopic_Faculty_IdAndStatusFalse(idFaculty, pageable);
+        return infoTopicRegisterRepository.findAllByTopic_Faculty_IdAndStatusFalseAndTopicCancelFalse(idFaculty, pageable);
     }
 }

@@ -277,12 +277,14 @@ public class ProcessController {
     private ResponseEntity<?> registerTopic(@RequestBody InfoTopicRegister infoTopicRegister) {
         if (infoTopicRegister.getTopic().getId() == null) {
             Topic topic = infoTopicRegister.getTopic();
+            topic.setDeleteFlag(false);
 //            topic.setFaculty(infoTopicRegister.getGroupAccount().getStudentList().get(0).getGrade().getFaculty());
-            infoTopicRegister.setTopic(topicService.registerTopic(infoTopicRegister.getTopic()));
+            infoTopicRegister.setTopic(topicService.registerTopic(topic));
         }
 
         infoTopicRegister.setStatus(false);
         infoTopicRegister.setStatusComplete(false);
+        infoTopicRegister.setTopicCancel(false);
 
         infoTopicRegisterService.registerInfoTopic(infoTopicRegister);
 

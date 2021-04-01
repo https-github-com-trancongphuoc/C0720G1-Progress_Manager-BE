@@ -10,20 +10,9 @@ public class StudentCreateDTO {
     private Boolean gender;
     private Integer gradeId;
     private Boolean deleteFlag;
+    private Integer accountId;
 
     public StudentCreateDTO() {
-    }
-
-    public StudentCreateDTO(Integer id, String name, String dateOfBirth, String address, String phone, String email, Boolean gender, Integer gradeId, Boolean deleteFlag) {
-        this.id = id;
-        this.name = name;
-        this.dateOfBirth = dateOfBirth;
-        this.address = address;
-        this.phone = phone;
-        this.email = email;
-        this.gender = gender;
-        this.gradeId = gradeId;
-        this.deleteFlag = deleteFlag;
     }
 
     public Integer getId() {
@@ -96,5 +85,13 @@ public class StudentCreateDTO {
 
     public void setDeleteFlag(Boolean deleteFlag) {
         this.deleteFlag = deleteFlag;
+    }
+
+    public Integer getAccountId() {
+        return accountId;
+    }
+
+    public void setAccountId(Integer accountId) {
+        this.accountId = accountId;
     }
 }
