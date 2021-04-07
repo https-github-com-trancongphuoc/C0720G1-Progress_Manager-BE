@@ -11,11 +11,12 @@ public class CreateUpdateTeacherDTO {
     private Integer degree;
     private String avatar;
     private Boolean gender;
+    private Integer accountId;
 
     public CreateUpdateTeacherDTO() {
     }
 
-    public CreateUpdateTeacherDTO(Integer id, String name, String dateOfBirth, String address, String phone, String email, Integer faculty, Integer degree, String avatar, Boolean gender) {
+    public CreateUpdateTeacherDTO(Integer id, String name, String dateOfBirth, String address, String phone, String email, Integer faculty, Integer degree, String avatar, Boolean gender, Integer accountId) {
         this.id = id;
         this.name = name;
         this.dateOfBirth = dateOfBirth;
@@ -26,6 +27,7 @@ public class CreateUpdateTeacherDTO {
         this.degree = degree;
         this.avatar = avatar;
         this.gender = gender;
+        this.accountId = accountId;
     }
 
     public Integer getId() {
@@ -107,5 +109,13 @@ public class CreateUpdateTeacherDTO {
 
     public void setDegree(Integer degree) {
         this.degree = degree;
+    }
+
+    public Integer getAccountId() {
+        return accountId;
+    }
+
+    public void setAccountId(Integer accountId) {
+        this.accountId = accountId;
     }
 }

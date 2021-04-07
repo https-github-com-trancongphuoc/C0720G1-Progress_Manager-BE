@@ -10,6 +10,7 @@ public class NotificationDTO {
     Boolean status;
     Integer accountId;
     Integer accountSendNotificationId;
+    String url;
 
     public NotificationDTO() {
     }
@@ -68,5 +69,13 @@ public class NotificationDTO {
 
     public void setAccountSendNotificationId(Integer accountSendNotificationId) {
         this.accountSendNotificationId = accountSendNotificationId;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
     }
 }

@@ -10,11 +10,12 @@ public class InfoTopicRegisterDTO {
     private String descriptionURL;
     private Integer topicId;
     private Integer groupAccountId;
-    private Integer teacherId;
-    private String content;
+    private TeacherCreateDTO teacher;
+    private String messageCancel;
     private String url;
     private List<StudentDTO> studentList;
     private String deadline;
+    private List<TopicProcessDTO> topicProcessList;
 
     public InfoTopicRegisterDTO() {
     }
@@ -75,20 +76,20 @@ public class InfoTopicRegisterDTO {
         this.groupAccountId = groupAccountId;
     }
 
-    public Integer getTeacherId() {
-        return teacherId;
+    public TeacherCreateDTO getTeacher() {
+        return teacher;
     }
 
-    public void setTeacherId(Integer teacherId) {
-        this.teacherId = teacherId;
+    public void setTeacher(TeacherCreateDTO teacher) {
+        this.teacher = teacher;
     }
 
-    public String getContent() {
-        return content;
+    public String getMessageCancel() {
+        return messageCancel;
     }
 
-    public void setContent(String content) {
-        this.content = content;
+    public void setMessageCancel(String messageCancel) {
+        this.messageCancel = messageCancel;
     }
 
     public String getUrl() {
@@ -113,5 +114,13 @@ public class InfoTopicRegisterDTO {
 
     public void setDeadline(String deadline) {
         this.deadline = deadline;
+    }
+
+    public List<TopicProcessDTO> getTopicProcessList() {
+        return topicProcessList;
+    }
+
+    public void setTopicProcessList(List<TopicProcessDTO> topicProcessList) {
+        this.topicProcessList = topicProcessList;
     }
 }

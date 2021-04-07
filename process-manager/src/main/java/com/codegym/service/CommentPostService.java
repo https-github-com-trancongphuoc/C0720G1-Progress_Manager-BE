@@ -35,4 +35,8 @@ public interface CommentPostService {
     void questionStudent(CommentPostDTO commentPostDTO) throws MessagingException, UnsupportedEncodingException;
 
     void createNotification(NotificationDTO notificationDTO);
+
+    void createNotificationUrl(NotificationDTO notificationDTO);
+
+    void createNotificationList(NotificationDTO notificationDTO);
 }

@@ -25,5 +25,17 @@ public interface TopicManagerRepository extends JpaRepository<Topic, Integer> {
     @Modifying
     @Query(value = "UPDATE `process_manager`.`topic` SET `delete_flag` = ?1 WHERE (`id` = ?2)", nativeQuery = true)
     void deleteTopic(Boolean deleteFlag, Integer id);
+
+    @Modifying
+    @Query(value = "INSERT INTO `process_manager`.`topic_process` (" +
+            "`date_end`, `date_start`, `percent_process`, " +
+            "`process_number`, `status`, `info_topic_register`) " +
+            "VALUES (?1, ?2, ?3, ?4, ?5, ?6) " ,nativeQuery = true)
+    void createTopicProcess(String dateEnd, String dateStart, Integer percentProcess,
+                            Integer processNumber, Boolean status, Integer infoTopicRegister);
+
+    @Modifying
+    @Query(value = "UPDATE `process_manager`.`info_topic_register` SET `status` = ?1,`teacher_id` = ?2  WHERE (`id` = ?3);",nativeQuery = true)
+    void statusInfo(Boolean status, Integer teacherId, Integer id);
 }
 

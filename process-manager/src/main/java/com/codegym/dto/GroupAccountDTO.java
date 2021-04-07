@@ -13,6 +13,7 @@ public class GroupAccountDTO {
     private String date;
     private List<StudentDTO> studentList;
     private List<InfoTopicRegisterDTO> infoTopicRegisterList;
+    private Integer teacherId;
 
     public GroupAccountDTO() {
     }
@@ -71,5 +72,13 @@ public class GroupAccountDTO {
 
     public void setInfoTopicRegisterList(List<InfoTopicRegisterDTO> infoTopicRegisterList) {
         this.infoTopicRegisterList = infoTopicRegisterList;
+    }
+
+    public Integer getTeacherId() {
+        return teacherId;
+    }
+
+    public void setTeacherId(Integer teacherId) {
+        this.teacherId = teacherId;
     }
 }

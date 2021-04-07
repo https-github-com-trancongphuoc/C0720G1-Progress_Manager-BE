@@ -13,13 +13,13 @@ import javax.transaction.Transactional;
 public interface StudentTeacherRepository extends JpaRepository<Student, Integer> {
     @Modifying
     @Query(value = "INSERT INTO `process_manager`.`student` " +
-            "(`address`, `date_of_birth`, `email`, `gender`, `name`, `phone`, `grade_id`, `delete_flag`) " +
-            "VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8) ", nativeQuery = true)
-    void createStudent(String address, String dateOfBirth, String email, Boolean gender, String name, String phone, Integer gradeId, Boolean delete);
+            "(`address`, `date_of_birth`, `email`, `gender`, `name`, `phone`, `grade_id`, `delete_flag`, `account_id`) " +
+            "VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9) ", nativeQuery = true)
+    void createStudent(String address, String dateOfBirth, String email, Boolean gender, String name, String phone, Integer gradeId, Boolean delete, Integer accountId);
 
     @Modifying
     @Query(value = "INSERT INTO `process_manager`.`teacher` " +
-            "(`address`, `date_of_birth`, `email`, `gender`, `name`, `phone`, `degree_id`, `faculty_id`, `delete_flag`) " +
-            "VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9)", nativeQuery = true)
-    void createTeacher(String address, String dateOfBirth, String email, Boolean gender, String name, String phone, Integer degreeId, Integer facultyId, Boolean delete);
+            "(`address`, `date_of_birth`, `email`, `gender`, `name`, `phone`, `degree_id`, `faculty_id`, `delete_flag`,`account_id`) " +
+            "VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9, ?10)", nativeQuery = true)
+    void createTeacher(String address, String dateOfBirth, String email, Boolean gender, String name, String phone, Integer degreeId, Integer facultyId, Boolean delete, Integer accountId);
 }

@@ -1,8 +1,12 @@
 package com.codegym.controller;
 
+import com.codegym.dto.AccountDTO;
+import com.codegym.dto.AccountRoleDTO;
 import com.codegym.dto.StudentCreateDTO;
 import com.codegym.dto.TeacherCreateDTO;
 import com.codegym.entity.Account;
+import com.codegym.entity.AccountRole;
+import com.codegym.service.AccountRoleService;
 import com.codegym.service.AccountService;
 import com.codegym.service.StudentAndTeacherService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +29,9 @@ public class StudentAndTeacherController {
     @Autowired
     AccountService accountService;
 
+    @Autowired
+    AccountRoleService accountRoleService;
+
     /**
      * TrungTQ: Thêm mới học sinh theo danh sách bằng file excel
      * */
@@ -34,8 +41,14 @@ public class StudentAndTeacherController {
         for (StudentCreateDTO studentCreateDTO : studentCreateDTOS){
             Account account = new Account();
             account.setUsername(studentCreateDTO.getEmail());
-            account.setPassword("123");
+            account.setPassword("1234");
             account = accountService.registerAccount(account);
+
+            AccountRoleDTO accountRoleDTO = new AccountRoleDTO();
+            accountRoleDTO.setAccountId(account.getId());
+            accountRoleDTO.setRoleId(3);
+            accountRoleService.registerAccountRole(accountRoleDTO);
+
             studentCreateDTO.setAccountId(account.getId());
             service.createStudent(studentCreateDTO);
         }
@@ -50,8 +63,13 @@ public class StudentAndTeacherController {
         for (TeacherCreateDTO teacherCreateDTO : teacherCreateDTOS){
             Account account = new Account();
             account.setUsername(teacherCreateDTO.getEmail());
-            account.setPassword("123");
+            account.setPassword("1234");
             account = accountService.registerAccount(account);
+            AccountRoleDTO accountRoleDTO = new AccountRoleDTO();
+            accountRoleDTO.setAccountId(account.getId());
+            accountRoleDTO.setRoleId(2);
+            accountRoleService.registerAccountRole(accountRoleDTO);
+
             teacherCreateDTO.setAccountId(account.getId());
             service.createTeacher(teacherCreateDTO);
         }

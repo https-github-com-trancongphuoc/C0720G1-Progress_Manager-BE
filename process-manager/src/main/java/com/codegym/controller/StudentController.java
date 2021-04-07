@@ -1,8 +1,10 @@
 package com.codegym.controller;
+import com.codegym.dto.AccountRoleDTO;
 import com.codegym.dto.CreateUpdateStudentDTO;
 import com.codegym.dto.IStudentEditDTO;
 import com.codegym.entity.Account;
 import com.codegym.entity.Student;
+import com.codegym.service.AccountRoleService;
 import com.codegym.service.AccountService;
 import com.codegym.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +23,9 @@ public class StudentController {
 
     @Autowired
     AccountService accountService;
+
+    @Autowired
+    AccountRoleService accountRoleService;
 
     /**
      * TinVT
@@ -72,9 +77,13 @@ public class StudentController {
         account.setPassword("123");
         account = accountService.registerAccount(account);
 
+        AccountRoleDTO accountRoleDTO = new AccountRoleDTO();
+        accountRoleDTO.setAccountId(account.getId());
+        accountRoleDTO.setRoleId(3);
+        accountRoleService.registerAccountRole(accountRoleDTO);
+
         studentDTO.setAccountId(account.getId());
         studentService.createNewStudent(studentDTO);
-
 
         return new ResponseEntity<CreateUpdateStudentDTO>(studentDTO, HttpStatus.OK);
     }

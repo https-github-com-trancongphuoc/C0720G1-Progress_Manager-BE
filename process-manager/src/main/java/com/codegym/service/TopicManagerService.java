@@ -2,6 +2,7 @@ package com.codegym.service;
 
 import com.codegym.dto.GroupAccountDTO;
 import com.codegym.dto.InfoTopicRegisterDTO;
+import com.codegym.dto.TopicProcessDTO;
 import com.codegym.entity.InfoTopicRegister;
 import com.codegym.entity.Student;
 import com.codegym.entity.Topic;
@@ -42,5 +43,19 @@ public interface TopicManagerService {
 
     List<String> listEmailStudentDeadline();
 
-    void sendStudentDeadline(GroupAccountDTO groupAccountDTO)throws MessagingException, UnsupportedEncodingException;;
+    void sendStudentDeadline(GroupAccountDTO groupAccountDTO) throws MessagingException, UnsupportedEncodingException;
+
+    void createTopicProcess(TopicProcessDTO topicProcessDTO);
+
+    void statusInfo(Integer teacherId, Integer id);
+
+    List<Integer> listIdStudent();
+
+    List<Integer> listIdTeacher();
+
+    List<Integer> listIdStudentFinish();
+
+    List<Integer> listIdTeacherFinish();
+
+    List<Integer> listIdStudentDeadline();
 }

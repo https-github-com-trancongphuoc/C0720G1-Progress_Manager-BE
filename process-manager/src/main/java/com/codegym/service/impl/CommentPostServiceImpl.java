@@ -113,4 +113,15 @@ public class CommentPostServiceImpl implements CommentPostService {
     public void createNotification(NotificationDTO notificationDTO) {
         notificationManagerRepository.createNotification(notificationDTO.getContent(), false, LocalDateTime.now().toString(), notificationDTO.getTitle(), notificationDTO.getAccountId(), notificationDTO.getAccountSendNotificationId());
     }
+
+    @Override
+    public void createNotificationUrl(NotificationDTO notificationDTO) {
+        notificationManagerRepository.createNotificationUrl(notificationDTO.getContent(), false, LocalDateTime.now().toString(), notificationDTO.getTitle(), notificationDTO.getAccountId(), notificationDTO.getAccountSendNotificationId(), notificationDTO.getUrl());
+    }
+
+    @Override
+    public void createNotificationList(NotificationDTO notificationDTO) {
+        notificationManagerRepository.createNotificationList(notificationDTO.getContent(), false, LocalDateTime.now().toString(), notificationDTO.getTitle(), notificationDTO.getAccountId(), notificationDTO.getUrl());
+
+    }
 }
