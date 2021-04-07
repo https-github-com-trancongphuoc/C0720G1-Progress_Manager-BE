@@ -53,10 +53,11 @@ public class CommentPostController {
         commentPostService.questionStudent(commentPostDTO);
 
         Notification notification = new Notification();
-        notification.setTitle(accountService.getAccountById(commentPostDTO.getAccountId()).getStudent().getName() + " vừa đăng bình câu hỏi về đề tài đang làm");
+        notification.setTitle(accountService.getAccountById(commentPostDTO.getAccountId()).getStudent().getName() + " vừa đăng bình câu hỏi.");
         notification.setTimeNotification(LocalDateTime.now().toString());
         notification.setAccount(accountService.getAccountByIdTeacher(commentPostDTO.getTeacherId()));
         notification.setStatus(false);
+        notification.setUrl("/process-detail/" + commentPostDTO.getProcessDetailId());
         notification.setAccountSendNotification(accountService.getAccountById(commentPostDTO.getAccountId()));
         notificationService.save(notification);
 

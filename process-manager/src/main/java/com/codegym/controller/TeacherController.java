@@ -1,7 +1,11 @@
 package com.codegym.controller;
+import com.codegym.dto.AccountRoleDTO;
 import com.codegym.dto.CreateUpdateTeacherDTO;
 import com.codegym.dto.ITeacherEditDTO;
+import com.codegym.entity.Account;
 import com.codegym.entity.Teacher;
+import com.codegym.service.AccountRoleService;
+import com.codegym.service.AccountService;
 import com.codegym.service.TeacherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -17,6 +21,12 @@ public class TeacherController {
     @Autowired
     TeacherService teacherService;
 
+    @Autowired
+    AccountService accountService;
+
+    @Autowired
+    AccountRoleService accountRoleService;
+
     @RequestMapping(value = "/teacher-list", method = RequestMethod.GET)
     public ResponseEntity<Page<Teacher>> getAllTeacher(@RequestParam(defaultValue = "") String find,
                                                        @RequestParam(value = "page") Integer page){
@@ -29,12 +39,22 @@ public class TeacherController {
 
 
     @RequestMapping(value = "/create-teacher", method = RequestMethod.POST)
-    public ResponseEntity<CreateUpdateTeacherDTO> createTeacher(@RequestBody CreateUpdateTeacherDTO createUpdateTeacherDTO){
-        if (createUpdateTeacherDTO == null){
+    public ResponseEntity<CreateUpdateTeacherDTO> createTeacher(@RequestBody CreateUpdateTeacherDTO teacherDTO){
+        if (teacherDTO == null){
             return new ResponseEntity<CreateUpdateTeacherDTO>(HttpStatus.BAD_REQUEST);
         }else {
-            teacherService.createTeacher(createUpdateTeacherDTO);
-            return new ResponseEntity<CreateUpdateTeacherDTO>(createUpdateTeacherDTO, HttpStatus.OK);
+            Account account = new Account();
+            account.setUsername(teacherDTO.getEmail());
+            account.setPassword("123");
+            account = accountService.registerAccount(account);
+            teacherDTO.setAccountId(account.getId());
+
+            AccountRoleDTO accountRoleDTO = new AccountRoleDTO();
+            accountRoleDTO.setAccountId(account.getId());
+            accountRoleDTO.setRoleId(2);
+
+            teacherService.createTeacher(teacherDTO);
+            return new ResponseEntity<CreateUpdateTeacherDTO>(teacherDTO, HttpStatus.OK);
         }
     }
 

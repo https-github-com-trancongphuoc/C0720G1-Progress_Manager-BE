@@ -22,8 +22,8 @@ public interface TeacherRepository extends JpaRepository<Teacher, Integer> {
 
     @Modifying
     @Query(value = "insert  into teacher(teacher.address, teacher.avatar, teacher.date_of_birth, teacher.email, teacher.name, teacher.phone," +
-            "teacher.degree_id, teacher.faculty_id, teacher.gender, teacher.delete_flag) value (?1,?2,?3,?4,?5,?6,?7,?8,?9, true )",nativeQuery = true)
-    void createTeacher(String address, String avatar, String dateOfBirth, String email, String name, String phone, Integer degreeId, Integer facultyId, Boolean gender);
+            "teacher.degree_id, teacher.faculty_id, teacher.gender,teacher.account_id, teacher.delete_flag) value (?1,?2,?3,?4,?5,?6,?7,?8,?9,?10, true )",nativeQuery = true)
+    void createTeacher(String address, String avatar, String dateOfBirth, String email, String name, String phone, Integer degreeId, Integer facultyId, Integer accountId,Boolean gender);
 
 
     @Modifying

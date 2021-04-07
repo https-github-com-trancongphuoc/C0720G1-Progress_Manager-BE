@@ -295,7 +295,7 @@ public class ProcessController {
      * PhuocTC: Lấy danh sách đăng ký đề tài chưa được phê duyệt
      * */
     @GetMapping("/get-topic-not-approval")
-    private ResponseEntity<?> getListTopicNotApproval(@PageableDefault(size = 5) Pageable pageable,
+    private ResponseEntity<?> getListTopicNotApproval(@PageableDefault(size = 20) Pageable pageable,
                                                       @RequestParam Integer id) {
         Page<InfoTopicRegister> infoTopicRegisterList = infoTopicRegisterService.getListTopicNotApproval(id, pageable);
 
@@ -314,16 +314,16 @@ public class ProcessController {
         infoTopicRegister.setStatus(true);
         infoTopicRegisterService.registerInfoTopic(infoTopicRegister);
 
-        for (int i = 0; i < 4; i++) {
-            TopicProcess topicProcess = new TopicProcess();
-            topicProcess.setInfoTopicRegister(infoTopicRegister);
-            topicProcess.setStatus(false);
-            topicProcess.setPercentProcess(0);
-            topicProcess.setProcessNumber(i + 1);
-            topicProcess.setDateStart(LocalDate.now().plusDays(i * 7).toString());
-            topicProcess.setDateEnd(LocalDate.now().plusDays((i + 1) * 7).toString());
-            topicProcessService.updateProcess(topicProcess);
-        }
+//        for (int i = 0; i < 4; i++) {
+//            TopicProcess topicProcess = new TopicProcess();
+//            topicProcess.setInfoTopicRegister(infoTopicRegister);
+//            topicProcess.setStatus(false);
+//            topicProcess.setPercentProcess(0);
+//            topicProcess.setProcessNumber(i + 1);
+//            topicProcess.setDateStart(LocalDate.now().plusDays(i * 7).toString());
+//            topicProcess.setDateEnd(LocalDate.now().plusDays((i + 1) * 7).toString());
+//            topicProcessService.updateProcess(topicProcess);
+//        }
 
         return new ResponseEntity<>(HttpStatus.OK);
     }

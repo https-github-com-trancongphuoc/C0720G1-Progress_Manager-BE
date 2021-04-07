@@ -16,14 +16,14 @@ public class StudentAndTeacherServiceImpl implements StudentAndTeacherService {
     public void createStudent(StudentCreateDTO studentCreateDTO) {
         studentTeacherRepository.createStudent(
                 studentCreateDTO.getAddress(), studentCreateDTO.getDateOfBirth(), studentCreateDTO.getEmail(),
-                studentCreateDTO.getGender(), studentCreateDTO.getName(), studentCreateDTO.getPhone(), studentCreateDTO.getGradeId(), true);
+                studentCreateDTO.getGender(), studentCreateDTO.getName(), studentCreateDTO.getPhone(), studentCreateDTO.getGradeId(), true, studentCreateDTO.getAccountId());
     }
 
     @Override
     public void createTeacher(TeacherCreateDTO teacherCreateDTO) {
         studentTeacherRepository.createTeacher(
                 teacherCreateDTO.getAddress(), teacherCreateDTO.getDateOfBirth(), teacherCreateDTO.getEmail(), teacherCreateDTO.getGender(),
-                teacherCreateDTO.getName(), teacherCreateDTO.getPhone(), teacherCreateDTO.getDegreeId(), teacherCreateDTO.getFacultyId(), true
+                teacherCreateDTO.getName(), teacherCreateDTO.getPhone(), teacherCreateDTO.getDegreeId(), teacherCreateDTO.getFacultyId(), true, teacherCreateDTO.getAccountId()
         );
     }
 

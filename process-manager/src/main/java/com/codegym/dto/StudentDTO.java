@@ -19,7 +19,8 @@ public class StudentDTO {
     public StudentDTO() {
     }
   
-    public StudentDTO(Integer id, String name, String dateOfBirth, String address, String phone, String email, String avatar, Boolean gender, Grade grade, Account account) {
+    public StudentDTO(Integer id, String name, String dateOfBirth, String address, String phone, String email,
+                      String avatar, Boolean gender, Grade grade, Account account) {
         this.id = id;
         this.name = name;
         this.dateOfBirth = dateOfBirth;
@@ -32,7 +33,8 @@ public class StudentDTO {
         this.account = account;
     }
 
-    public StudentDTO(Integer id, String name, String dateOfBirth, String address, String phone, String email, String avatar, Boolean gender, Grade grade) {
+    public StudentDTO(Integer id, String name, String dateOfBirth, String address, String phone, String email,
+                      String avatar, Boolean gender, Grade grade) {
         this.id = id;
         this.name = name;
         this.dateOfBirth = dateOfBirth;

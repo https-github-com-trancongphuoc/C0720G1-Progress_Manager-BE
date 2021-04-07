@@ -2,13 +2,9 @@ package com.codegym.service.impl;
 
 import com.codegym.dto.GroupAccountDTO;
 import com.codegym.dto.InfoTopicRegisterDTO;
-import com.codegym.dto.NotificationDTO;
-import com.codegym.entity.InfoTopicRegister;
-import com.codegym.entity.Student;
-import com.codegym.entity.Teacher;
-import com.codegym.entity.Topic;
+import com.codegym.dto.TopicProcessDTO;
+import com.codegym.entity.*;
 import com.codegym.repository.*;
-import com.codegym.service.GroupAccountService;
 import com.codegym.service.TopicManagerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -92,7 +88,7 @@ public class TopicManagerServiceImpl implements TopicManagerService {
         helper.setSubject(subject);
         mailContent = "<div style='text-align: center'>\n" +
                 "    <h2>Nội dung nguyên nhân hủy đề tài</h2>\n" +
-                "    <p><span style='font-weight: bold'>" + infoTopicRegisterDTO.getContent() + "</span></p>\n" +
+                "    <p><span style='font-weight: bold'>" + infoTopicRegisterDTO.getMessageCancel() + "</span></p>\n" +
                 "    <p><span style='font-weight: bold'> Yêu cầu bạn hãy nhanh chóng chọn đề tài mới </span></p>\n" +
                 "    </div>";
         helper.setText(mailContent, true);
@@ -146,5 +142,40 @@ public class TopicManagerServiceImpl implements TopicManagerService {
                 "    </div>";
         helper.setText(mailContent, true);
         javaMailSender.send(message);
+    }
+
+    @Override
+    public void createTopicProcess(TopicProcessDTO topicProcessDTO) {
+        topicManagerRepository.createTopicProcess(topicProcessDTO.getDateEnd(), topicProcessDTO.getDateStart(), 0, topicProcessDTO.getProcessNumber(), false, topicProcessDTO.getInfoTopicRegister());
+    }
+
+    @Override
+    public void statusInfo(Integer teacherId,Integer id) {
+        topicManagerRepository.statusInfo(true, teacherId,id);
+    }
+
+    @Override
+    public List<Integer> listIdStudent() {
+        return infoTopicRegisterRepository.listIdStudent();
+    }
+
+    @Override
+    public List<Integer> listIdTeacher() {
+        return infoTopicRegisterRepository.listIdTeacher();
+    }
+
+    @Override
+    public List<Integer> listIdStudentFinish() {
+        return infoTopicRegisterRepository.listIdStudentFinish();
+    }
+
+    @Override
+    public List<Integer> listIdTeacherFinish() {
+        return infoTopicRegisterRepository.listIdTeacherFinish();
+    }
+
+    @Override
+    public List<Integer> listIdStudentDeadline() {
+        return infoTopicRegisterRepository.listIdStudentDeadline();
     }
 }

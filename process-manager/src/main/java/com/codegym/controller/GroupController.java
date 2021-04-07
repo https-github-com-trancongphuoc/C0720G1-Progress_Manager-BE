@@ -86,15 +86,15 @@ public class GroupController {
     }
 
     @RequestMapping(value = "search-group/{searchName}", method = RequestMethod.GET)
-    public ResponseEntity<?> searchGroup(@PageableDefault(size = 6) Pageable pageable,
+    public ResponseEntity<?> searchGroup(@PageableDefault(size = 10) Pageable pageable,
                                          @PathVariable("searchName") String searchName) {
         return new ResponseEntity<>(this.groupAccountService.searchGroup(searchName, pageable), HttpStatus.OK);
     }
 
     @RequestMapping(value = "create-group/{nameGroup}/{accountId}", method = RequestMethod.POST)
     public ResponseEntity<List<GroupAccount>> add(@RequestBody List<Student> listStudentAdded,
-                                 @PathVariable("nameGroup") String nameGroup,
-                                 @PathVariable("accountId") Integer accountId) {
+                                                  @PathVariable("nameGroup") String nameGroup,
+                                                  @PathVariable("accountId") Integer accountId) {
         this.groupAccountService.createGroup(nameGroup, listStudentAdded);
         List<GroupAccount> list = this.groupAccountService.findAll();
         System.out.println(list.get(list.size()-1).getId());
@@ -109,8 +109,8 @@ public class GroupController {
 
     @RequestMapping(value = "create-group-leader/{nameGroup}/{accountId}", method = RequestMethod.POST)
     public ResponseEntity<List<GroupAccount>> createGroupAndLeader(@RequestBody List<Student> listStudentAdded,
-                                                  @PathVariable("nameGroup") String nameGroup,
-                                                  @PathVariable("accountId") Integer accountId) {
+                                                                   @PathVariable("nameGroup") String nameGroup,
+                                                                   @PathVariable("accountId") Integer accountId) {
         this.groupAccountService.createGroup(nameGroup, listStudentAdded);
         this.groupAccountService.saveGroup(accountId, nameGroup);
         List<GroupAccount> list = this.groupAccountService.findAll();

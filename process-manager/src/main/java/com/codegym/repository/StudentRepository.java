@@ -81,8 +81,8 @@ public interface StudentRepository extends JpaRepository<Student, Integer> {
 
     @Modifying
     @Query(
-            value = "update student \n" +
-                    "set student.group_account_id = null\n" +
+            value = "update student  " +
+                    "set student.group_account_id = null " +
                     "where student.id = ?1",
             nativeQuery = true)
     void deleteGroupOfStudentById(Integer id);

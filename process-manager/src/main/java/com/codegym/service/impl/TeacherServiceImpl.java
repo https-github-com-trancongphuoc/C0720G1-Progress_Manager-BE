@@ -25,7 +25,7 @@ public class  TeacherServiceImpl implements TeacherService {
     @Override
     public void createTeacher(CreateUpdateTeacherDTO createUpdateTeacherDTO) {
         teacherRepository.createTeacher(createUpdateTeacherDTO.getAddress(), createUpdateTeacherDTO.getAvatar(), createUpdateTeacherDTO.getDateOfBirth(), createUpdateTeacherDTO.getEmail(),
-                createUpdateTeacherDTO.getName(), createUpdateTeacherDTO.getPhone(), createUpdateTeacherDTO.getDegree(), createUpdateTeacherDTO.getFaculty(), createUpdateTeacherDTO.getGender());
+                createUpdateTeacherDTO.getName(), createUpdateTeacherDTO.getPhone(), createUpdateTeacherDTO.getDegree(), createUpdateTeacherDTO.getFaculty(), createUpdateTeacherDTO.getAccountId(), createUpdateTeacherDTO.getGender());
     }
 
     @Override

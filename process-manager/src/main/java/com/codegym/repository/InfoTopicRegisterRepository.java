@@ -29,20 +29,20 @@ public interface InfoTopicRegisterRepository extends JpaRepository<InfoTopicRegi
     @Query(value = "UPDATE `process_manager`.`info_topic_register` SET `topic_cancel` = ?1 WHERE (`id` = ?2) ", nativeQuery = true)
     void topicCancel(Boolean topicCancel, Integer id);
 
-    @Query(value = "select email from info_topic_register " +
+    @Query(value = "select teacher.email from info_topic_register " +
             "join teacher on teacher.id = info_topic_register.teacher_id " +
             "join topic_process on topic_process.info_topic_register = info_topic_register.id " +
             "where topic_process.date_end >= curdate()+1 and topic_process.date_end <= curdate()+2 ", nativeQuery = true)
     List<String> listEmailTeacher();
 
-    @Query(value = "select email from info_topic_register\n" +
-            "join group_account on group_account.id = info_topic_register.group_account_id\n" +
-            "join student on student.group_account_id = group_account.id\n" +
-            "join topic_process on topic_process.info_topic_register = info_topic_register.id\n" +
+    @Query(value = "select student.email from info_topic_register " +
+            "join group_account on group_account.id = info_topic_register.group_account_id " +
+            "join student on student.group_account_id = group_account.id " +
+            "join topic_process on topic_process.info_topic_register = info_topic_register.id " +
             "where topic_process.date_end >= curdate()+1 and topic_process.date_end <= curdate()+2", nativeQuery = true)
     List<String> listEmailStudent();
 
-    @Query(value = "select email from info_topic_register " +
+    @Query(value = "select teacher.email from info_topic_register " +
             "join teacher on teacher.id = info_topic_register.teacher_id " +
             "join topic_process on topic_process.info_topic_register = info_topic_register.id " +
             "where topic_process.date_end >= curdate()+1 " +
@@ -50,18 +50,59 @@ public interface InfoTopicRegisterRepository extends JpaRepository<InfoTopicRegi
             "and percent_process = 100", nativeQuery = true)
     List<String> listEmailTeacherFinish();
 
-    @Query(value = "select email from info_topic_register\n" +
-            "join group_account on group_account.id = info_topic_register.group_account_id\n" +
-            "join student on student.group_account_id = group_account.id\n" +
-            "join topic_process on topic_process.info_topic_register = info_topic_register.id\n" +
+    @Query(value = "select student.email from info_topic_register " +
+            "join group_account on group_account.id = info_topic_register.group_account_id " +
+            "join student on student.group_account_id = group_account.id " +
+            "join topic_process on topic_process.info_topic_register = info_topic_register.id " +
             "where topic_process.date_end >= curdate()+1 " +
             "and topic_process.date_end <= curdate()+2 " +
             "and percent_process = 100", nativeQuery = true)
     List<String> listEmailStudentFinish();
 
-    @Query(value = "select email from group_account " +
+    @Query(value = "select student.email from group_account " +
             "join student on student.group_account_id = group_account.id " +
             "where group_account.date >= curdate()+1 " +
             "and group_account.date <= curdate()+2", nativeQuery = true)
     List<String> listEmailStudentDeadline();
+
+    @Query(value = "select account.id from info_topic_register " +
+            "join teacher on teacher.id = info_topic_register.teacher_id " +
+            "join topic_process on topic_process.info_topic_register = info_topic_register.id " +
+            "join account on teacher.account_id = account.id " +
+            "where topic_process.date_end >= curdate()+1 and topic_process.date_end <= curdate()+2 ", nativeQuery = true)
+    List<Integer> listIdTeacher();
+
+    @Query(value = "select account.id from info_topic_register " +
+            "join group_account on group_account.id = info_topic_register.group_account_id " +
+            "join student on student.group_account_id = group_account.id " +
+            "join topic_process on topic_process.info_topic_register = info_topic_register.id " +
+            "join account on student.account_id = account.id " +
+            "where topic_process.date_end >= curdate()+1 and topic_process.date_end <= curdate()+2", nativeQuery = true)
+    List<Integer> listIdStudent();
+
+    @Query(value = "select account.id from info_topic_register " +
+            "join teacher on teacher.id = info_topic_register.teacher_id " +
+            "join topic_process on topic_process.info_topic_register = info_topic_register.id " +
+            "join account on teacher.account_id = account.id " +
+            "where topic_process.date_end >= curdate()+1 " +
+            "and topic_process.date_end <= curdate()+2 " +
+            "and percent_process = 100", nativeQuery = true)
+    List<Integer> listIdTeacherFinish();
+
+    @Query(value = "select account.id from info_topic_register " +
+            "join group_account on group_account.id = info_topic_register.group_account_id " +
+            "join student on student.group_account_id = group_account.id " +
+            "join topic_process on topic_process.info_topic_register = info_topic_register.id " +
+            "join account on student.account_id = account.id " +
+            "where topic_process.date_end >= curdate()+1 " +
+            "and topic_process.date_end <= curdate()+2 " +
+            "and percent_process = 100", nativeQuery = true)
+    List<Integer> listIdStudentFinish();
+
+    @Query(value = "select account.id from group_account " +
+            "join student on student.group_account_id = group_account.id " +
+            "join account on student.account_id = account.id " +
+            "where group_account.date >= curdate()+1 " +
+            "and group_account.date <= curdate()+2", nativeQuery = true)
+    List<Integer> listIdStudentDeadline();
 }

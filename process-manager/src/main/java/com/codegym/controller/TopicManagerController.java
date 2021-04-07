@@ -1,18 +1,12 @@
 package com.codegym.controller;
 
-import com.codegym.dto.CommentPostDTO;
-import com.codegym.dto.GroupAccountDTO;
-import com.codegym.dto.InfoTopicRegisterDTO;
-import com.codegym.dto.NotificationDTO;
-import com.codegym.entity.Comment;
-import com.codegym.entity.InfoTopicRegister;
-import com.codegym.entity.Student;
-import com.codegym.entity.Topic;
+import com.codegym.dto.*;
+import com.codegym.entity.*;
+import com.codegym.service.CommentPostService;
 import com.codegym.service.TopicManagerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -31,6 +25,8 @@ public class TopicManagerController {
 
     @Autowired
     TopicManagerService topicManagerService;
+    @Autowired
+    CommentPostService commentPostService;
 
     /**
      * TrungTQ Code: Dùng để hiển thị danh sách đồ án tốt nghiệp
@@ -94,6 +90,17 @@ public class TopicManagerController {
         topicManagerService.sendStudent(infoTopicRegisterDTO);
         topicManagerService.deleteTopic(infoTopicRegisterDTO.getTopicId());
         topicManagerService.topicCancel(infoTopicRegisterDTO.getId());
+        for (int i = 0; i < infoTopicRegisterDTO.getStudentList().size(); i++) {
+            NotificationDTO notificationDTO = new NotificationDTO();
+            String content = "Nội dung hủy: ";
+            String title = "Thông báo hủy đề tài";
+            notificationDTO.setTitle(title);
+            notificationDTO.setContent(content + infoTopicRegisterDTO.getMessageCancel());
+            notificationDTO.setUrl("/group/" + infoTopicRegisterDTO.getId());
+            notificationDTO.setAccountId(infoTopicRegisterDTO.getStudentList().get(i).getId());
+            notificationDTO.setAccountSendNotificationId(infoTopicRegisterDTO.getTeacher().getId());
+            commentPostService.createNotificationUrl(notificationDTO);
+        }
         return new ResponseEntity<Void>(HttpStatus.CREATED);
     }
 
@@ -101,6 +108,38 @@ public class TopicManagerController {
     public ResponseEntity<Void> deadline(@Valid @RequestBody GroupAccountDTO groupAccountDTO, UriComponentsBuilder ucBuilder) throws UnsupportedEncodingException, MessagingException {
         topicManagerService.sendStudentDeadline(groupAccountDTO);
         topicManagerService.updateDeadline(groupAccountDTO);
+        for (int i = 0; i < groupAccountDTO.getStudentList().size(); i++) {
+            NotificationDTO notificationDTO = new NotificationDTO();
+            String content = "Hạn chót nộp đề tài dự án ";
+            String title = "Thông báo hạn chót nộp đề tài";
+            notificationDTO.setContent(content + groupAccountDTO.getDate());
+            notificationDTO.setTitle(title);
+            notificationDTO.setUrl("/group/" + groupAccountDTO.getId());
+            notificationDTO.setAccountId(groupAccountDTO.getStudentList().get(i).getId());
+            notificationDTO.setAccountSendNotificationId(groupAccountDTO.getTeacherId());
+            commentPostService.createNotificationUrl(notificationDTO);
+        }
+        return new ResponseEntity<Void>(HttpStatus.CREATED);
+    }
+
+//    @RequestMapping(value = "/create-process", method = RequestMethod.POST)
+//    public ResponseEntity<Void> createStudent(@Valid @RequestBody List<TopicProcessDTO> topicProcessDTOS, UriComponentsBuilder ucBuilder) {
+//        topicManagerService.statusInfo(topicProcessDTOS.get(0).getInfoTopicRegister());
+//        for (TopicProcessDTO topicProcessDTO : topicProcessDTOS){
+//            topicManagerService.createTopicProcess(topicProcessDTO);
+//        }return new ResponseEntity<Void>(HttpStatus.CREATED);
+//    }
+
+    @RequestMapping(value = "/create-process", method = RequestMethod.POST)
+    public ResponseEntity<Void> createStudent(@Valid @RequestBody InfoTopicRegisterDTO infoTopicRegisterDTO, UriComponentsBuilder ucBuilder) {
+
+
+        topicManagerService.statusInfo(
+                infoTopicRegisterDTO.getTeacher().getId(),
+                infoTopicRegisterDTO.getTopicProcessList().get(0).getInfoTopicRegister());
+        for (TopicProcessDTO topicProcessDTO : infoTopicRegisterDTO.getTopicProcessList()) {
+            topicManagerService.createTopicProcess(topicProcessDTO);
+        }
         return new ResponseEntity<Void>(HttpStatus.CREATED);
     }
 }
